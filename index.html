@@ -121,7 +121,6 @@
                     <a href="#about" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">ABOUT</a>
                     <a href="#services" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">SERVICES</a>
                     <a href="#request-form" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">REQUEST SERVICES</a>
-                    <a href="#contact" class="text-gray-800 font-bold hover:text-amli-black transition-colors">CONTACT</a>
                 </div>
                         <div class="md:hidden">
             <button id="mobile-menu-btn" class="text-amli-black hover:text-amli-black p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amli-gold">
@@ -137,19 +136,20 @@
                 <a href="#about" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">ABOUT</a>
                 <a href="#services" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICES</a>
                 <a href="#request-form" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">REQUEST SERVICES</a>
-                <a href="#contact" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">CONTACT</a>
             </div>
         </div>
     </nav>
 
     <!-- hero-section -->
-    <section id="home" class="hero-section min-h-screen bg-cover bg-center bg-no-repeat bg-[url('images/image.webp')] flex items-center justify-center px-4 pt-16">
-        <!-- Blurred background image -->
-        <div class="absolute inset-0 z-0 bg-center bg-cover bg-no-repeat"
-        style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/image.webp'); filter: blur(4px); transform: scale(1.1); background-blend-mode: darken;">
+    <section id="home" class="hero-section min-h-screen flex items-center justify-center px-4 pt-16 
+    bg-black md:bg-[url('images/image.webp')] md:bg-cover md:bg-center md:bg-no-repeat">
+
+        <!-- Blurred background image (only on md and above) -->
+        <div class="hidden md:block absolute inset-0 z-0 bg-center bg-cover bg-no-repeat"
+            style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/image.webp'); filter: blur(4px); transform: scale(1.1); background-blend-mode: darken;">
         </div>
 
-
+        <!-- Content -->
         <div class="relative z-10 max-w-4xl mx-auto text-center text-white">
             <div class="badge-container">
                 <img src="images/3D.png" alt="AmLI Badge" class="rotating-badge" height="700" width="700" style="width: 350px;">
@@ -166,6 +166,7 @@
 
 
 
+
     <!-- About Section -->
     <section id="about" class="py-20 bg-amli-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -177,10 +178,10 @@
                 <div>
                     <h3 class="text-2xl font-bold text-amli-dark mb-4">Our Core Commitment</h3>
                     <p class="text-lg text-gray-600 mb-6">
-                        AmLI (Adaptive Monitoring Layered Intelligence) is India’s advanced security ecosystem—merging elite training, 7-domain expertise, and smart tech to deliver trusted protection, legal assurance, and immediate intervention
+                        AmLI (Adaptive Monitoring Layered Intelligence) is India’s premier next-generation ecosystem seamlessly integrating strategic protection, legal assurance, and instantaneous intervention through adaptive infrastructure and cutting-edge technologies.
                     </p>
                     <p class="text-lg text-gray-600 mb-6">
-                        Born from a singular vision and backed by multi-domain mastery, AmLI is the embodiment of intelligent protection.
+                        AmLI is engineered not merely to safeguard, but to empower. Conceived from a singular, transformative vision, it reimagines security with structure, intent, and uncompromising precision. This unified philosophy of layered strength, area coverage, and purpose is what we call—<i>AmLI’s Umbrella</i>.
                         <div class="flex justify-center items-center py-10 gap-10">
                             <!-- Left Column (3 Vertical Balls) -->
                             <div class="flex flex-col gap-6">
@@ -224,7 +225,7 @@
                 <div class="bg-gradient-to-br from-amli-gray to-amli-dark rounded-lg p-8 text-amli-white">
                     <h3 class="text-2xl font-bold mb-6">Why Leaders Trust AmLI?</h3>
                     <p><i>
-                        AmLI’s operations are powered by a selected force—meticulously trained under national experts in law, medical, technology, education, agriculture, legal affairs, and innovation.
+                        AmLI’s operations are powered by a selected force—meticulously guided under national experts in law, medical, technology, education, agriculture, legal affairs, and innovation.
                         <div class="flex items-center justify-center min-h-[300px]">
                             <img src="/images/Umbrella.png" alt="AmLI Umbrella">
                         </div>
