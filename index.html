@@ -714,30 +714,6 @@
                         window.open(whatsappUrl, '_blank');
                     }
 
-        // Copy UPI ID function
-        function copyUpiId() {
-            const upiId = 'amli@upi';
-            navigator.clipboard.writeText(upiId).then(function () {
-                alert('UPI ID copied to clipboard!');
-            }).catch(function () {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = upiId;
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('UPI ID copied to clipboard!');
-            });
-        }
-
-        // Set minimum date to today
-        const startDateField = document.getElementById('start-date');
-        if (startDateField) {
-            startDateField.min = new Date().toISOString().split('T')[0];
-        }
-
         // Dynamic form fields based on service type
         function updateFormFields() {
             const serviceType = document.getElementById('service-type').value;
@@ -902,9 +878,9 @@
             setTimeout(() => {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
-            }, 2000);
+            }, 1000);
         });
-    </script>
+    </script>        
 </body>
 
 </html>
