@@ -437,20 +437,14 @@
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="location" class="block text-sm font-medium text-amli-dark mb-2">Service Location
-                                *</label>
+                        <div> 
+                            <label for="location" class="block text-sm font-medium text-amli-dark mb-2">
+                              Service Location *
+                            </label>
                             <input type="text" id="location" name="location" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-blue focus:border-transparent"
-                                placeholder="Building address, event venue, etc.">
-                        </div>
-                        <div>
-                            <label for="area-coverage" class="block text-sm font-medium text-amli-dark mb-2">Area
-                                Coverage</label>
-                            <input type="text" id="area-coverage" name="area-coverage"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-blue focus:border-transparent"
-                                placeholder="Specific areas to monitor/protect">
-                        </div>
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-blue focus:border-transparent"
+                              placeholder="Building address, event venue, etc.">
+                          </div>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-6">
@@ -482,12 +476,11 @@
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-blue focus:border-transparent"
                             onchange="updateFormFields()">
                             <option value="">Select service type</option>
-                            <option value="private-security">Private Security Services</option>
-                            <option value="vip-protection">VIP Protection</option>
-                            <option value="emergency-response">Emergency Response</option>
-                            <option value="school-safety">School & College Safety</option>
-                            <option value="smart-monitoring">Smart Monitoring</option>
-                            <option value="legal-support">Legal Support & Reporting</option>
+                            <option value="private-security" disabled>Private Security Services</option>
+                            <option value="vip-protection" disabled>VIP Protection</option>
+                            <option value="emergency-response" disabled>Emergency Response</option>
+                            <option value="smart-monitoring" disabled>Smart Monitoring</option>
+                            <option value="legal-support" disabled>Legal Support & Reporting</option>
                             <option value="ride-service">Transportation/Ride Service</option>
                         </select>
                     </div>
@@ -543,7 +536,7 @@
                     <h3 class="text-2xl font-bold text-amli-white mb-4">AmLI</h3>
                     <i>
                         <p class="text-amli-gray mb-4">
-                            Adaptive Monitoring Layered Intelligence — Professional security and support services powered by expertise from 7 professional pillars across India.
+                            Adaptive Monitoring Layered Intelligence — Professional security and support services powered by expertise of all professional pillars across India.
                         </p>
                     </i>
                     <div class="flex justify-center md:justify-start space-x-4">
@@ -645,7 +638,6 @@
             Name: ${data.name}
             Phone: ${data.phone}
             Service Location: ${data.location}
-            Area Coverage: ${data['area-coverage'] || 'Not specified'}
             Start Date: ${data['start-date']}
             Service Duration: ${data.duration}
             Service Type: ${data['service-type']}
@@ -700,7 +692,6 @@
             Name: ${data.name}
             Phone: ${data.phone}
             Service Location: ${data.location}
-            Area Coverage: ${data['area-coverage'] || 'Not specified'}
             Start Date: ${data['start-date']}
             Duration: ${data.duration}
             Service Type: ${data['service-type']}
@@ -802,7 +793,7 @@
                             <select id="emergency-type" name="emergency-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-blue focus:border-transparent">
                                 <option value="">Select emergency type</option>
                                 <option value="medical">Medical Emergency</option>
-                                <option value="security">Security Breach</option>
+                                <option value="security">Personal Security Breach</option>
                                 <option value="disaster">Natural Disaster</option>
                                 <option value="fire">Fire Emergency</option>
                                 <option value="other">Other Emergency</option>
@@ -837,8 +828,8 @@
                             </select>
                         </div>
                         <div>
-                            <label for="coverage-area" class="block text-sm font-medium text-amli-dark mb-2">Coverage Area (sq ft)</label>
-                            <input type="text" id="coverage-area" name="coverage-area" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-blue focus:border-transparent" placeholder="e.g., 5000 sq ft">
+                            <label for="coverage-area" class="block text-sm font-medium text-amli-dark mb-2">Coverage Area (sq m)</label>
+                            <input type="text" id="coverage-area" name="coverage-area" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-blue focus:border-transparent" placeholder="e.g., 5000 sq m">
                         </div>
                     </div>
                 `;
@@ -848,6 +839,15 @@
                 personnelField.style.display = 'block';
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+        var today = new Date();
+        var yyyy = today.getFullYear();
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var dd = String(today.getDate()).padStart(2, '0');
+        var minDate = yyyy + '-' + mm + '-' + dd;
+        document.getElementById('start-date').setAttribute('min', minDate);
+        });
 
         // Close mobile menu when clicking on links
         document.querySelectorAll('#mobile-menu a').forEach(link => {
@@ -880,7 +880,40 @@
                 submitBtn.disabled = false;
             }, 1000);
         });
-    </script>        
+        
+        // Auto-fill location on page load or event
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const lat = position.coords.latitude;
+              const lon = position.coords.longitude;
+      
+              console.log("Latitude:", lat);
+              console.log("Longitude:", lon);
+      
+              // Reverse geocoding using OpenStreetMap
+              fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
+                .then(response => response.json())
+                .then(data => {
+                  const locationName = data.display_name;
+                  console.log("Location Name:", locationName);
+                  document.getElementById("location").value = locationName;
+                })
+                .catch(error => {
+                  console.error("Error in reverse geocoding:", error);
+                });
+            },
+            function (error) {
+              if (error.code === error.PERMISSION_DENIED) {
+                console.log("Location permission denied.");
+              } else {
+                console.log("Error getting location:", error.message);
+              }
+            }
+          );
+        } else {
+          console.log("Geolocation is not supported by this browser.");
+        }
+    </script>
 </body>
-
 </html>
