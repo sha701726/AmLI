@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Protection - AmLI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'amli-dark': '#2A2D34',
+                        'amli-blue': '#0078D4',
+                        'amli-gray': '#C0C0C0',
+                        'amli-white': '#FFFFFF'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-item {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateX(5px);
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+
+<body class="bg-amli-white text-amli-dark">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="AmLI.png" alt="AmLI Logo" class="h-8 w-auto">
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-amli-dark hover:text-amli-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="index.html#services" class="text-amli-dark hover:text-amli-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Services</a>
+                        <a href="index.html#about" class="text-amli-dark hover:text-amli-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="index.html#contact" class="text-amli-dark hover:text-amli-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-16 bg-gradient-to-br from-amli-dark to-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold mb-6">VIP Protection Services</h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Elite protection services for VIPs, executives, and high-profile individuals with specialized security protocols.
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#contact" class="bg-amli-blue hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+                        Get Protection
+                    </a>
+                    <a href="#services" class="border border-white text-white hover:bg-white hover:text-amli-dark px-8 py-3 rounded-lg font-medium transition-colors">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Overview -->
+    <section id="services" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-amli-dark mb-4">Elite Protection Solutions</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Comprehensive VIP protection services designed to ensure the safety and security of high-profile individuals in any environment.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Personal Bodyguard Services -->
+                <div class="service-card bg-white rounded-lg p-8 border border-gray-200">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-user-shield text-4xl text-amli-blue mb-4"></i>
+                        <h3 class="text-2xl font-semibold text-amli-dark mb-3">Personal Bodyguard Services</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>24/7 personal protection and escort</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Discreet and professional security detail</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Threat assessment and risk mitigation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Emergency response and evacuation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Travel security and logistics coordination</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Executive Protection -->
+                <div class="service-card bg-white rounded-lg p-8 border border-gray-200">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-briefcase text-4xl text-amli-blue mb-4"></i>
+                        <h3 class="text-2xl font-semibold text-amli-dark mb-3">Executive Protection</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Corporate executive security programs</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Business travel protection</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Meeting and conference security</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Family protection services</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Reputation and privacy protection</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Risk Assessment & Planning -->
+                <div class="service-card bg-white rounded-lg p-8 border border-gray-200">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-chart-line text-4xl text-amli-blue mb-4"></i>
+                        <h3 class="text-2xl font-semibold text-amli-dark mb-3">Risk Assessment & Planning</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Comprehensive threat analysis</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Security protocol development</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Emergency response planning</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Route planning and security</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Ongoing risk monitoring</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Protection Levels -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-amli-dark mb-4">Protection Levels</h2>
+                <p class="text-lg text-gray-600">
+                    Tailored protection levels to meet your specific security requirements and risk profile.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Basic Protection -->
+                <div class="bg-white rounded-lg p-8 border border-gray-200">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-semibold text-amli-dark mb-2">Basic Protection</h3>
+                        <p class="text-amli-blue font-semibold">Essential Security</p>
+                    </div>
+                    <ul class="space-y-3 text-gray-700 mb-6">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Single bodyguard escort</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Basic threat assessment</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Event security coverage</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Emergency response</span>
+                        </li>
+                    </ul>
+                    <p class="text-sm text-gray-500">Ideal for: Business executives, public figures, and moderate risk situations</p>
+                </div>
+
+                <!-- Enhanced Protection -->
+                <div class="bg-white rounded-lg p-8 border-2 border-amli-blue relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-amli-blue text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</span>
+                    </div>
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-semibold text-amli-dark mb-2">Enhanced Protection</h3>
+                        <p class="text-amli-blue font-semibold">Comprehensive Security</p>
+                    </div>
+                    <ul class="space-y-3 text-gray-700 mb-6">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Multi-agent security detail</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Advanced threat analysis</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>24/7 monitoring and response</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Travel security coordination</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Family protection included</span>
+                        </li>
+                    </ul>
+                    <p class="text-sm text-gray-500">Ideal for: High-profile individuals, celebrities, and elevated risk situations</p>
+                </div>
+
+                <!-- Elite Protection -->
+                <div class="bg-white rounded-lg p-8 border border-gray-200">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-semibold text-amli-dark mb-2">Elite Protection</h3>
+                        <p class="text-amli-blue font-semibold">Maximum Security</p>
+                    </div>
+                    <ul class="space-y-3 text-gray-700 mb-6">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Full security team deployment</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Intelligence gathering and analysis</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Advanced technology integration</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>International protection services</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span>Custom security protocols</span>
+                        </li>
+                    </ul>
+                    <p class="text-sm text-gray-500">Ideal for: Heads of state, ultra-high-net-worth individuals, and extreme risk situations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Protection Features -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-amli-dark mb-4">Advanced Protection Features</h2>
+                <p class="text-lg text-gray-600">
+                    State-of-the-art security features designed for maximum protection and discretion.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Security Features -->
+                <div class="bg-white rounded-lg p-8">
+                    <h3 class="text-2xl font-semibold text-amli-dark mb-6">
+                        <i class="fas fa-shield-alt text-amli-blue mr-3"></i>
+                        Security Features
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="feature-item p-4 rounded-lg border-l-4 border-amli-blue">
+                            <h4 class="font-semibold text-amli-dark mb-2">Threat Detection</h4>
+                            <p class="text-gray-600">Advanced surveillance and monitoring systems for early threat detection.</p>
+                        </div>
+                        <div class="feature-item p-4 rounded-lg border-l-4 border-amli-blue">
+                            <h4 class="font-semibold text-amli-dark mb-2">Emergency Response</h4>
+                            <p class="text-gray-600">Immediate response protocols with law enforcement coordination.</p>
+                        </div>
+                        <div class="feature-item p-4 rounded-lg border-l-4 border-amli-blue">
+                            <h4 class="font-semibold text-amli-dark mb-2">Secure Transportation</h4>
+                            <p class="text-gray-600">Armored vehicles and secure travel arrangements.</p>
+                        </div>
+                        <div class="feature-item p-4 rounded-lg border-l-4 border-amli-blue">
+                            <h4 class="font-semibold text-amli-dark mb-2">Communication Systems</h4>
+                            <p class="text-gray-600">Encrypted communication and real-time coordination.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Discretion & Privacy -->
+                <div class="bg-white rounded-lg p-8">
+                    <h3 class="text-2xl font-semibold text-amli-dark mb-6">
+                        <i class="fas fa-user-secret text-amli-blue mr-3"></i>
+                        Discretion & Privacy
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="feature-item p-4 rounded-lg border-l-4 border-amli-blue">
+                            <h4 class="font-semibold text-amli-dark mb-2">Low-Profile Protection</h4>
+                            <p class="text-gray-600">Discreet security that doesn't draw attention to the principal.</p>
+                        </div>
+                        <div class="feature-item p-4 rounded-lg border-l-4 border-amli-blue">
+                            <h4 class="font-semibold text-amli-dark mb-2">Privacy Protection</h4>
+                            <p class="text-gray-600">Strict confidentiality and privacy protocols.</p>
+                        </div>
+                        <div class="feature-item p-4 rounded-lg border-l-4 border-amli-blue">
+                            <h4 class="font-semibold text-amli-dark mb-2">Media Management</h4>
+                            <p class="text-gray-600">Handling of media attention and public relations.</p>
+                        </div>
+                        <div class="feature-item p-4 rounded-lg border-l-4 border-amli-blue">
+                            <h4 class="font-semibold text-amli-dark mb-2">Information Security</h4>
+                            <p class="text-gray-600">Protection of sensitive information and communications.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-amli-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Request VIP Protection</h2>
+                <p class="text-xl text-gray-300">
+                    Contact us for a confidential consultation about your VIP protection needs.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Why Choose AmLI VIP Protection?</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                            <span>Former law enforcement and military personnel</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                            <span>Advanced training and certifications</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                            <span>Discreet and professional service</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                            <span>24/7 availability and response</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                            <span>International protection capabilities</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white text-amli-dark rounded-lg p-8">
+                    <h3 class="text-2xl font-semibold mb-6">Confidential Consultation</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Protection Level</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-blue focus:border-transparent">
+                                <option>Basic Protection</option>
+                                <option>Enhanced Protection</option>
+                                <option>Elite Protection</option>
+                                <option>Custom Solution</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Duration</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-blue focus:border-transparent">
+                                <option>One-time Event</option>
+                                <option>Short-term (1-30 days)</option>
+                                <option>Long-term (30+ days)</option>
+                                <option>Ongoing Protection</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Additional Information</label>
+                            <textarea rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-blue focus:border-transparent" placeholder="Describe your protection needs..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-amli-blue hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition-colors">
+                            Request Consultation
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p>&copy; 2025 AmLI - Adaptive Monitoring Layered Intelligence. All rights reserved.</p>
+                <p class="mt-2 text-sm text-gray-400">
+                    <a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a> | 
+                    <a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
