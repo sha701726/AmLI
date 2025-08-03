@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Evaluation - Prem Bhalerao</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff4757;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .warning-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .warning-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 600px;
+            margin: 20px;
+        }
+
+        .warning-icon {
+            font-size: 48px;
+            color: #ff4757;
+            margin-bottom: 20px;
+        }
+
+        .exam-content {
+            display: none;
+        }
+
+        .ai-warning {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .ai-warning.expired {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .skip-countdown {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 2001;
+            font-size: 14px;
+        }
+
+        .skip-countdown:hover {
+            background: #0056b3;
+        }
+
+        .question {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .question h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .question-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+
+        .mcq-options {
+            margin: 20px 0;
+        }
+
+        .mcq-option {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mcq-option:hover {
+            border-color: #007bff;
+            background: #f8f9fa;
+        }
+
+        .mcq-option.selected {
+            border-color: #007bff;
+            background: #e3f2fd;
+        }
+
+        .mcq-option input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .text-area {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .code-area {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            background: #f8f9fa;
+        }
+
+        .sql-code {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .submit-btn {
+            background: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin: 20px 0;
+        }
+
+        .submit-btn:hover {
+            background: #218838;
+        }
+
+        .submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .exam-complete {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 5000;
+        }
+
+        .complete-content {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .complete-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .complete-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .complete-message {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .complete-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .complete-details h4 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .complete-details p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .pdf-download-btn {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin: 20px 10px;
+            display: inline-block;
+        }
+
+        .pdf-download-btn:hover {
+            background: #0056b3;
+        }
+
+        .pdf-download-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .question {
+                padding: 20px;
+            }
+            
+            .timer {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">
+        <span id="timeLeft">01:00:00</span>
+    </div>
+
+    <div class="exam-complete" id="examComplete">
+        <div class="complete-content">
+            <div class="complete-icon" id="completeIcon">✅</div>
+            <div class="complete-title" id="completeTitle">Exam Completed Successfully!</div>
+            <div class="complete-message" id="completeMessage">
+                Your exam has been submitted successfully. Thank you for completing the Technical Evaluation.
+            </div>
+            <div class="complete-details">
+                <h4>Exam Summary:</h4>
+                <p><strong>Candidate:</strong> <span id="completeCandidate">Prem Bhalerao</span></p>
+                <p><strong>Duration:</strong> <span id="completeDuration">0</span> minutes</p>
+                <p><strong>Submission Time:</strong> <span id="completeTime">-</span></p>
+                <p><strong>Status:</strong> <span id="completeStatus">Submitted</span></p>
+            </div>
+            <div>
+                <p style="margin: 0; font-size: 14px; color: #000000; font-weight: bold;">
+                Please download the answer book and submit to us through:
+                </p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #000000;">
+                    • Email: <strong>sha701726@gmail.com</strong>
+                </p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #000000;">
+                    • WhatsApp: <strong>+91 7017267400</strong>
+                </p>
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="pdf-download-btn" onclick="generateExamPDF()">
+                    📄 Download Exam Report (PDF)
+                </button>
+            </div>
+            <p style="font-size: 14px; color: #999; margin-top: 20px;">
+                You can now close this browser tab.
+            </p>
+        </div>
+    </div>
+
+    <div class="warning-screen" id="warningScreen">
+        <div class="warning-content">
+            <div><img src="AmLI.png" alt="" srcset="" style="width: 150px; height: 100px;"></div>
+            <p style="margin: 20px 0; font-size: 16px; line-height: 1.6;">
+                <strong>Important:</strong> Please ensure you are ready to begin the exam.
+                The exam will start automatically after the countdown. Or you may skip the countdown and start the exam now.
+            </p>
+            <p style="margin: 20px 0; font-size: 14px; color: #666;">
+                The exam will automatically start in <span id="countdown">2:00</span> minutes.
+            </p>
+            <div style="margin-top: 30px;">
+                <p style="font-size: 14px; color: #666;">
+                    <strong>Exam Details:</strong><br>
+                    Duration: 1 Hour<br>
+                    Candidate: Prem Bhalerao<br>
+                    Skills: C++, Python, MySQL, DSA<br>
+                    <strong>AI Usage:</strong> Allowed for first 30 minutes only
+                </p>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #d4edda; border-radius: 8px; border-left: 4px solid #28a745;">
+                <p style="margin: 0; font-size: 14px; color: #155724;">
+                    <strong>✅ Ready to Start:</strong> All systems are ready. The exam will begin automatically. You may skip the countdown and start the exam now.
+                </p>
+            </div>
+        </div>
+        <button class="skip-countdown" onclick="skipCountdown()">Skip Countdown & Start Now</button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Technical Evaluation - Prem Bhalerao</h1>
+            <p><strong>Duration:</strong> 1 Hour | <strong>Candidate:</strong> Prem Bhalerao</p>
+            <p><strong>Skills Assessed:</strong> C++ OOP, Python Programming, MySQL Queries, DSA</p>
+        </div>
+
+        <div class="exam-content" id="examContent">
+            <div class="ai-warning" id="aiWarning">
+                🤖 AI Usage Allowed - You can use AI tools for the first 30 minutes of the exam
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <form id="examForm">
+                <!-- Question 1 -->
+                <div class="question">
+                    <h3>✅ Q1: MCQ – C++ OOP Concepts</h3>
+                    <div class="question-info">
+                        <strong>Topic:</strong> Object-Oriented Programming – Encapsulation<br>
+                        <strong>Time Limit:</strong> 10 minutes
+                    </div>
+                    
+                    <p><strong>Question:</strong></p>
+                    <p>Which of the following statements is <strong>TRUE</strong> about <strong>encapsulation</strong> in C++?</p>
+                    
+                    <div class="mcq-options">
+                        <div class="mcq-option">
+                            <input type="radio" name="q1" value="A" id="q1a">
+                            <label for="q1a">A. Encapsulation prevents a class from using constructors.</label>
+                        </div>
+                        <div class="mcq-option">
+                            <input type="radio" name="q1" value="B" id="q1b">
+                            <label for="q1b">B. Encapsulation is the ability to define multiple functions with the same name.</label>
+                        </div>
+                        <div class="mcq-option">
+                            <input type="radio" name="q1" value="C" id="q1c">
+                            <label for="q1c">C. Encapsulation binds data and the functions that operate on that data into a single unit.</label>
+                        </div>
+                        <div class="mcq-option">
+                            <input type="radio" name="q1" value="D" id="q1d">
+                            <label for="q1d">D. Encapsulation is used to define a class without implementation.</label>
+                        </div>
+                    </div>
+                    
+                    <p><strong>Explanation (2-3 sentences):</strong></p>
+                    <textarea class="text-area" name="q1_explanation" placeholder="Explain why your selected option is correct..."></textarea>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question">
+                    <h3>✅ Q2: Python Coding – Palindrome Validator</h3>
+                    <div class="question-info">
+                        <strong>Topic:</strong> Python + Logic Building + String Manipulation<br>
+                        <strong>Time Limit:</strong> 25 minutes
+                    </div>
+                    
+                    <p><strong>Question:</strong></p>
+                    <p>Write a Python function that checks if a given string is a <strong>valid palindrome</strong>, ignoring case, spaces, and punctuation.</p>
+                    
+                    <p><strong>Examples:</strong></p>
+                    <div class="sql-code">
+Input:  "A man, a plan, a canal: Panama"
+Output: True
+
+Input:  "Hello, World!"
+Output: False
+                    </div>
+                    
+                    <p><strong>Requirements:</strong></p>
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li>Ignore non-alphanumeric characters</li>
+                        <li>Convert to lowercase</li>
+                        <li>Use only Python's <strong>built-in functions</strong></li>
+                        <li>Include at least <strong>two test cases</strong></li>
+                    </ul>
+                    
+                    <p><strong>Function Signature:</strong></p>
+                    <div class="sql-code">
+def is_valid_palindrome(s: str) -> bool:
+    # Your code here
+                    </div>
+                    
+                    <p><strong>Your Python Code:</strong></p>
+                    <textarea class="code-area" name="q2_python" placeholder="Write your Python function here..."></textarea>
+                    
+                    <p><strong>Test Cases:</strong></p>
+                    <textarea class="text-area" name="q2_testcases" placeholder="Include at least 2 test cases with expected outputs..."></textarea>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question">
+                    <h3>✅ Q3: SQL Coding – Aggregation with Filter</h3>
+                    <div class="question-info">
+                        <strong>Topic:</strong> MySQL Query Writing<br>
+                        <strong>Time Limit:</strong> 25 minutes
+                    </div>
+                    
+                    <p><strong>Schema Provided:</strong></p>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Customers Table</th>
+                                </tr>
+                                <tr>
+                                    <th>CustomerID</th>
+                                    <th>Name</th>
+                                    <th>City</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Prem</td>
+                                    <td>Aurangabad</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Asha</td>
+                                    <td>Pune</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Ravi</td>
+                                    <td>Nagpur</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Orders Table</th>
+                                </tr>
+                                <tr>
+                                    <th>OrderID</th>
+                                    <th>CustomerID</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>101</td>
+                                    <td>1</td>
+                                    <td>500</td>
+                                </tr>
+                                <tr>
+                                    <td>102</td>
+                                    <td>2</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>103</td>
+                                    <td>1</td>
+                                    <td>300</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <p><strong>Task:</strong></p>
+                    <p>Write an SQL query to list <strong>customers who have made at least one order</strong> where the <code>Amount > 0</code>, and display their name along with the <strong>total order amount</strong>.</p>
+                    
+                    <p><strong>Expected Output:</strong></p>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>TotalAmount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Prem</td>
+                                    <td>800</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <p><strong>Your SQL Query:</strong></p>
+                    <textarea class="code-area" name="q3_sql" placeholder="Write your SQL query here..."></textarea>
+                    
+                    <p><strong>Explanation:</strong></p>
+                    <textarea class="text-area" name="q3_explanation" placeholder="Briefly explain your query logic..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Submit Exam</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let examStartTime;
+        let examEndTime;
+        let timerInterval;
+        let countdownInterval;
+        let countdown = 120; // 2 minutes in seconds
+        let aiTimeLimit = 30 * 60; // 30 minutes in seconds
+        let examSubmitted = false;
+        let examInProgress = false;
+
+        // Initialize countdown
+        function startCountdown() {
+            countdownInterval = setInterval(() => {
+                countdown--;
+                const minutes = Math.floor(countdown / 60);
+                const seconds = countdown % 60;
+                document.getElementById('countdown').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    startExam();
+                }
+            }, 1000);
+        }
+
+        // Skip countdown and start immediately
+        function skipCountdown() {
+            clearInterval(countdownInterval);
+            startExam();
+        }
+
+        // Start the exam
+        function startExam() {
+            document.getElementById('warningScreen').style.display = 'none';
+            document.getElementById('examContent').style.display = 'block';
+            
+            examStartTime = new Date();
+            examEndTime = new Date(examStartTime.getTime() + (60 * 60 * 1000)); // 1 hour
+            examInProgress = true;
+            
+            // Save exam state to localStorage
+            localStorage.setItem('premExamInProgress', 'true');
+            localStorage.setItem('premExamStartTime', examStartTime.toISOString());
+            
+            startTimer();
+            updateProgress();
+            enableSecurityFeatures();
+        }
+
+        // Timer function
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const now = new Date();
+                const timeLeft = examEndTime - now;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    completeExam('timeout');
+                    return;
+                }
+                
+                const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                document.getElementById('timeLeft').textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                updateProgress();
+                updateAIWarning();
+            }, 1000);
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            if (!examStartTime || !examEndTime) return;
+            
+            const now = new Date();
+            const totalTime = examEndTime - examStartTime;
+            const elapsed = now - examStartTime;
+            const progress = Math.min((elapsed / totalTime) * 100, 100);
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
+
+        // Update AI warning
+        function updateAIWarning() {
+            if (!examStartTime) return;
+            
+            const now = new Date();
+            const elapsed = Math.floor((now - examStartTime) / 1000);
+            const aiWarning = document.getElementById('aiWarning');
+            
+            if (elapsed >= aiTimeLimit) {
+                aiWarning.textContent = '🚫 AI Usage Expired - You must work independently now';
+                aiWarning.classList.add('expired');
+            } else {
+                const remaining = aiTimeLimit - elapsed;
+                const minutes = Math.floor(remaining / 60);
+                const seconds = remaining % 60;
+                aiWarning.textContent = `🤖 AI Usage Allowed - ${minutes}:${seconds.toString().padStart(2, '0')} remaining`;
+            }
+        }
+
+        // MCQ option selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const mcqOptions = document.querySelectorAll('.mcq-option');
+            mcqOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Remove selected class from all options in this group
+                    const name = radio.name;
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
+                        input.closest('.mcq-option').classList.remove('selected');
+                    });
+                    
+                    // Add selected class to current option
+                    this.classList.add('selected');
+                });
+            });
+
+            // Form submission
+            document.getElementById('examForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitExam();
+            });
+
+            // Check if exam is already in progress
+            checkExamStatus();
+        });
+
+        // Check exam status on page load
+        function checkExamStatus() {
+            const examCompleted = localStorage.getItem('premExamCompleted');
+            const examInProgress = localStorage.getItem('premExamInProgress');
+            const savedStartTime = localStorage.getItem('premExamStartTime');
+            
+            // Check if exam was already completed
+            if (examCompleted === 'true') {
+                showAlreadyCompletedScreen();
+                return;
+            }
+            
+            if (examInProgress === 'true' && savedStartTime) {
+                // Resume exam
+                examStartTime = new Date(savedStartTime);
+                examEndTime = new Date(examStartTime.getTime() + (60 * 60 * 1000));
+                
+                // Check if exam time has expired
+                const now = new Date();
+                if (now >= examEndTime) {
+                    // Exam time expired, auto-submit
+                    localStorage.removeItem('premExamInProgress');
+                    localStorage.removeItem('premExamStartTime');
+                    localStorage.setItem('premExamCompleted', 'true');
+                    localStorage.setItem('premExamCompletedDate', new Date().toLocaleString());
+                    localStorage.setItem('premExamCompletedDuration', '60'); // Full duration
+                    localStorage.setItem('premExamCompletedStatus', 'Time Expired');
+                    alert('Exam time has expired. Your exam has been submitted.');
+                    showAlreadyCompletedScreen();
+                } else {
+                    // Resume exam
+                    document.getElementById('warningScreen').style.display = 'none';
+                    document.getElementById('examContent').style.display = 'block';
+                    document.getElementById('timer').style.display = 'block';
+                    
+                    // Resume timer and other features
+                    startTimer();
+                    updateProgress();
+                    enableSecurityFeatures();
+                }
+            } else {
+                // Start fresh exam
+                startCountdown();
+            }
+        }
+
+        // Submit exam function
+        function submitExam() {
+            if (examSubmitted) return;
+            completeExam('submitted');
+        }
+
+        // Complete exam function
+        function completeExam(reason) {
+            if (examSubmitted) return;
+            
+            clearInterval(timerInterval);
+            examSubmitted = true;
+            examInProgress = false;
+            
+            // Calculate duration and save completion details
+            const duration = examStartTime ? Math.round((new Date() - examStartTime) / 1000 / 60) : 0;
+            const completionDate = new Date().toLocaleString();
+            
+            // Mark exam as completed and save completion details
+            localStorage.setItem('premExamCompleted', 'true');
+            localStorage.setItem('premExamCompletedDate', completionDate);
+            localStorage.setItem('premExamCompletedDuration', duration.toString());
+            localStorage.setItem('premExamCompletedStatus', reason === 'timeout' ? 'Time Expired' : 'Submitted');
+            localStorage.removeItem('premExamInProgress');
+            localStorage.removeItem('premExamStartTime');
+            
+            const formData = new FormData(document.getElementById('examForm'));
+            const answers = {};
+            
+            for (let [key, value] of formData.entries()) {
+                answers[key] = value;
+            }
+            
+            // Create submission data
+            const submission = {
+                candidate: 'Prem Bhalerao',
+                examDate: new Date().toISOString(),
+                duration: duration,
+                answers: answers,
+                completionReason: reason
+            };
+            
+            // Save answers for PDF generation
+            localStorage.setItem('premExamAnswers', JSON.stringify(answers));
+            
+            // Disable security features
+            disableSecurityFeatures();
+            
+            // Show completion screen
+            showCompletionScreen(reason);
+        }
+
+        // Show completion screen
+        function showCompletionScreen(reason) {
+            const completeScreen = document.getElementById('examComplete');
+            const completeIcon = document.getElementById('completeIcon');
+            const completeTitle = document.getElementById('completeTitle');
+            const completeMessage = document.getElementById('completeMessage');
+            const completeStatus = document.getElementById('completeStatus');
+            
+            // Hide all other content
+            document.getElementById('warningScreen').style.display = 'none';
+            document.getElementById('examContent').style.display = 'none';
+            document.getElementById('timer').style.display = 'none';
+            
+            // Update completion details
+            const duration = examStartTime ? Math.round((new Date() - examStartTime) / 1000 / 60) : 0;
+            const submissionTime = new Date().toLocaleString();
+            
+            document.getElementById('completeDuration').textContent = duration;
+            document.getElementById('completeTime').textContent = submissionTime;
+            
+            if (reason === 'timeout') {
+                completeIcon.textContent = '⏰';
+                completeTitle.textContent = 'Exam Time Expired!';
+                completeMessage.textContent = 'The exam time has expired. Your answers have been automatically submitted.';
+                completeStatus.textContent = 'Time Expired';
+            } else {
+                completeIcon.textContent = '✅';
+                completeTitle.textContent = 'Exam Completed Successfully!';
+                completeMessage.textContent = 'Your exam has been submitted successfully. Thank you for completing the Technical Evaluation.';
+                completeStatus.textContent = 'Submitted';
+            }
+            
+            // Show completion screen
+            completeScreen.style.display = 'flex';
+        }
+
+        // Show already completed screen
+        function showAlreadyCompletedScreen() {
+            const completeScreen = document.getElementById('examComplete');
+            const completeIcon = document.getElementById('completeIcon');
+            const completeTitle = document.getElementById('completeTitle');
+            const completeMessage = document.getElementById('completeMessage');
+            const completeStatus = document.getElementById('completeStatus');
+            
+            // Hide all other content
+            document.getElementById('warningScreen').style.display = 'none';
+            document.getElementById('examContent').style.display = 'none';
+            document.getElementById('timer').style.display = 'none';
+            
+            // Update completion details for already completed exam
+            const completedDate = localStorage.getItem('premExamCompletedDate') || new Date().toLocaleString();
+            const completedDuration = localStorage.getItem('premExamCompletedDuration') || '0';
+            const completedStatus = localStorage.getItem('premExamCompletedStatus') || 'Submitted';
+            
+            document.getElementById('completeDuration').textContent = completedDuration;
+            document.getElementById('completeTime').textContent = completedDate;
+            document.getElementById('completeStatus').textContent = completedStatus;
+            
+            // Set already completed message
+            completeIcon.textContent = '🔒';
+            completeTitle.textContent = 'Exam Already Completed';
+            completeMessage.textContent = 'You have already completed this exam. Each candidate can only take the exam once.';
+            
+            // Show completion screen
+            completeScreen.style.display = 'flex';
+        }
+
+        // Enable security features
+        function enableSecurityFeatures() {
+            // Disable copy paste
+            document.addEventListener('copy', preventCopyPaste);
+            document.addEventListener('paste', preventCopyPaste);
+            document.addEventListener('cut', preventCopyPaste);
+            
+            // Disable right click
+            document.addEventListener('contextmenu', preventRightClick);
+            
+            // Disable keyboard shortcuts
+            document.addEventListener('keydown', preventKeyboardShortcuts);
+            
+            // Prevent new tab/window opening
+            window.addEventListener('beforeunload', preventTabChange);
+            
+            // Disable text selection
+            document.addEventListener('selectstart', preventSelection);
+            
+            // Prevent drag and drop
+            document.addEventListener('dragstart', preventDrag);
+        }
+
+        // Disable security features
+        function disableSecurityFeatures() {
+            document.removeEventListener('copy', preventCopyPaste);
+            document.removeEventListener('paste', preventCopyPaste);
+            document.removeEventListener('cut', preventCopyPaste);
+            document.removeEventListener('contextmenu', preventRightClick);
+            document.removeEventListener('keydown', preventKeyboardShortcuts);
+            window.removeEventListener('beforeunload', preventTabChange);
+            document.removeEventListener('selectstart', preventSelection);
+            document.removeEventListener('dragstart', preventDrag);
+        }
+
+        // Security functions
+        function preventCopyPaste(e) {
+            e.preventDefault();
+            return false;
+        }
+
+        function preventRightClick(e) {
+            e.preventDefault();
+            return false;
+        }
+
+        function preventKeyboardShortcuts(e) {
+            // Prevent Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+A, F12, Ctrl+Shift+I, Ctrl+U
+            if ((e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x' || e.key === 'a' || e.key === 'u')) ||
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                return false;
+            }
+        }
+
+        function preventTabChange(e) {
+            if (!examSubmitted) {
+                e.preventDefault();
+                e.returnValue = 'Please submit your exam before leaving this page.';
+                return 'Please submit your exam before leaving this page.';
+            }
+        }
+
+        function preventSelection(e) {
+            e.preventDefault();
+            return false;
+        }
+
+        function preventDrag(e) {
+            e.preventDefault();
+            return false;
+        }
+
+        // Prevent form submission on Enter key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.tagName === 'TEXTAREA') {
+                e.preventDefault();
+                e.target.value += '\n';
+            }
+        });
+
+        // Generate PDF function
+        function generateExamPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Get exam data
+            const candidate = 'Prem Bhalerao';
+            const examDate = localStorage.getItem('premExamCompletedDate') || new Date().toLocaleString();
+            const duration = localStorage.getItem('premExamCompletedDuration') || '0';
+            const status = localStorage.getItem('premExamCompletedStatus') || 'completed';
+            const answers = JSON.parse(localStorage.getItem('premExamAnswers') || '{}');
+            
+            // Set up document
+            doc.setFontSize(20);
+            doc.setFont(undefined, 'bold');
+            doc.text('Technical Evaluation Report', 105, 20, { align: 'center' });
+            
+            // Candidate Information
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('Candidate Information:', 20, 40);
+            doc.setFont(undefined, 'normal');
+            doc.text(`Name: ${candidate}`, 20, 50);
+            doc.text(`Exam Date: ${examDate}`, 20, 60);
+            doc.text(`Duration: ${duration} minutes`, 20, 70);
+            doc.text(`Status: ${status}`, 20, 80);
+            
+            // Questions and Answers
+            let yPosition = 100;
+            
+            // Question 1
+            yPosition = addQuestionToPDF(doc, 1, 'MCQ – C++ OOP Concepts', 
+                'Which of the following statements is TRUE about encapsulation in C++?\n\n' +
+                'A. Encapsulation prevents a class from using constructors.\n' +
+                'B. Encapsulation is the ability to define multiple functions with the same name.\n' +
+                'C. Encapsulation binds data and the functions that operate on that data into a single unit.\n' +
+                'D. Encapsulation is used to define a class without implementation.',
+                answers.q1 || 'Not answered',
+                answers.q1_explanation || 'Not provided',
+                yPosition);
+            
+            // Question 2
+            yPosition = addQuestionToPDF(doc, 2, 'Python Coding – Palindrome Validator',
+                'Write a Python function that checks if a given string is a valid palindrome, ignoring case, spaces, and punctuation.\n\n' +
+                'Examples:\n' +
+                'Input: "A man, a plan, a canal: Panama" → Output: True\n' +
+                'Input: "Hello, World!" → Output: False\n\n' +
+                'Requirements:\n' +
+                '• Ignore non-alphanumeric characters\n' +
+                '• Convert to lowercase\n' +
+                '• Use only Python\'s built-in functions\n' +
+                '• Include at least two test cases',
+                answers.q2_python || 'Not answered',
+                `Test Cases: ${answers.q2_testcases || 'Not provided'}`,
+                yPosition);
+            
+            // Question 3
+            yPosition = addQuestionToPDF(doc, 3, 'SQL Coding – Aggregation with Filter',
+                'Schema:\n\n' +
+                'Customers Table:\n' +
+                'CustomerID | Name | City\n' +
+                '1          | Prem | Aurangabad\n' +
+                '2          | Asha | Pune\n' +
+                '3          | Ravi | Nagpur\n\n' +
+                'Orders Table:\n' +
+                'OrderID | CustomerID | Amount\n' +
+                '101     | 1          | 500\n' +
+                '102     | 2          | 0\n' +
+                '103     | 1          | 300\n\n' +
+                'Task: Write an SQL query to list customers who have made at least one order where Amount > 0, and display their name along with the total order amount.\n\n' +
+                'Expected Output:\n' +
+                'Name | TotalAmount\n' +
+                'Prem | 800',
+                answers.q3_sql || 'Not answered',
+                `Explanation: ${answers.q3_explanation || 'Not provided'}`,
+                yPosition);
+            
+            // Add page numbers
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(10);
+                doc.text(`Page ${i} of ${pageCount}`, 105, doc.internal.pageSize.height - 10, { align: 'center' });
+            }
+            
+            // Save the PDF
+            const fileName = `Technical_Evaluation_${candidate.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+            doc.save(fileName);
+        }
+        
+        // Helper function to add questions to PDF
+        function addQuestionToPDF(doc, questionNumber, title, question, answer, explanation, startY) {
+            let yPosition = startY;
+            
+            // Check if we need a new page
+            if (yPosition > 250) {
+                doc.addPage();
+                yPosition = 20;
+            }
+            
+            // Question header
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text(`Question ${questionNumber}: ${title}`, 20, yPosition);
+            yPosition += 10;
+            
+            // Question text
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'normal');
+            const questionLines = doc.splitTextToSize(question, 170);
+            doc.text(questionLines, 20, yPosition);
+            yPosition += (questionLines.length * 5) + 10;
+            
+            // Answer section
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('Candidate Answer:', 20, yPosition);
+            yPosition += 8;
+            
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'normal');
+            const answerLines = doc.splitTextToSize(answer, 170);
+            doc.text(answerLines, 20, yPosition);
+            yPosition += (answerLines.length * 5) + 10;
+            
+            // Explanation if provided
+            if (explanation && explanation.trim() !== '') {
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.text('Explanation:', 20, yPosition);
+                yPosition += 8;
+                
+                doc.setFontSize(11);
+                doc.setFont(undefined, 'normal');
+                const explanationLines = doc.splitTextToSize(explanation, 170);
+                doc.text(explanationLines, 20, yPosition);
+                yPosition += (explanationLines.length * 5) + 15;
+            }
+            
+            // Add separator line
+            doc.setDrawColor(200, 200, 200);
+            doc.line(20, yPosition, 190, yPosition);
+            yPosition += 20;
+            
+            return yPosition;
+        }
+    </script>
+</body>
+</html> 
