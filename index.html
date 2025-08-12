@@ -107,13 +107,58 @@
         body {
             overflow-x: hidden;
         }
+
+        /* Reveal on scroll (viewport-based) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+            transition: opacity 600ms ease, transform 600ms ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Optional variant directions */
+        .reveal-left {
+            transform: translateX(-24px);
+        }
+
+        .reveal-right {
+            transform: translateX(24px);
+        }
+
+        .reveal-up {
+            transform: translateY(24px);
+        }
+
+        .reveal-zoom {
+            transform: scale(0.95);
+        }
+
+        .in-view.reveal-left,
+        .in-view.reveal-right,
+        .in-view.reveal-up,
+        .in-view.reveal-zoom {
+            transform: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
     </style>
 </head>
 
 <body class="bg-amli-white text-amli-dark">
     <!-- Navigation -->
     <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-0">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center ">
                     <!-- <span class="text-2xl font-bold text-amli-white">AmLI</span> -->
@@ -130,8 +175,7 @@
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">ABOUT</a>
                     <a href="#services"
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">SERVICES</a>
-                    <a href="#faq"
-                        class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">FAQ</a>
+                    <a href="#faq" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">FAQ</a>
                     <a href="#request-form"
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">REQUEST
                         SERVICES</a>
@@ -164,11 +208,11 @@
 
     <!-- hero-section -->
     <section id="home" class="hero-section min-h-screen flex items-center justify-center px-4 pt-16 
-    bg-black md:bg-[url('images/image.webp')] md:bg-cover md:bg-center md:bg-no-repeat">
+    bg-black md:bg-[url('images/image.jpg')] md:bg-cover md:bg-center md:bg-no-repeat">
 
         <!-- Blurred background image (only on md and above) -->
         <div class="hidden md:block absolute inset-0 z-0 bg-center bg-cover bg-no-repeat"
-            style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/image.webp'); filter: blur(4px); transform: scale(1.1); background-blend-mode: darken;">
+            style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/image.jpg'); filter: blur(2px); transform: scale(1.1); background-blend-mode: darken;">
         </div>
 
         <!-- Content -->
@@ -187,10 +231,11 @@
         </div>
     </section>
 
+
     <!-- About Section -->
     <section id="about" class="py-20 bg-amli-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
+        <div class="max-w-6xl mx-auto px-0">
+            <div class="text-center mb-16 reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">Get To Know AmLI</h2>
                 <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
             </div>
@@ -279,7 +324,7 @@
 
     <!-- Services Section -->
     <section id="services" class="py-20 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto px-0">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-black mb-6">Our Framework</h2>
                 <div class="w-24 h-1 bg-gray-400 mx-auto mb-8"></div>
@@ -288,71 +333,78 @@
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="reveal grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
                 <!-- Service Card 1 -->
-                <div class="flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
+                <div class="reveal flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
                     <div>
                         <h3 class="text-xl font-bold text-black mb-2">Private Security</h3>
                         <p class="text-gray-600 text-sm">Professional guards for events, buildings, and institutions.
                         </p>
-                        <i><a href="private-security-services.html" style="color: green">Know More</a></i>
+                        <i><a href="private-security-services.html"
+                                class="text-green-600 font-medium hover:underline">Know More</a></i>
                     </div>
-                    <img src="https://img.icons8.com/ios-filled/64/000000/security-checked.png" alt="Security"
-                        class="h-12 w-12 mr-3">
+                    <img src="images/Private Security Service.png" alt="Security" class="h-24 w-36 ml-1">
                 </div>
 
                 <!-- Service Card 2 -->
-                <div class="flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
+                <div class="reveal flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
                     <div>
                         <h3 class="text-xl font-bold text-black mb-2">VIP Protection</h3>
                         <p class="text-gray-600 text-sm">Elite personal security for <br>high-profile individuals.</p>
-                        <i><a href="vip-protection.html" style="color: green">Know More</a></i>
+                        <i><a href="vip-protection.html" class="text-green-600 font-medium hover:underline">Know
+                                More</a></i>
                     </div>
-                    <img src="https://img.icons8.com/ios-filled/64/000000/private2.png" alt="VIP"
-                        class="h-12 w-12 mr-3">
+                    <img src="images/VIP Protaction.png" alt="VIP" class="h-24 w-24 ml-0">
                 </div>
 
                 <!-- Service Card 3 -->
-                <div class="flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
+                <div class="reveal flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
                     <div>
                         <h3 class="text-xl font-bold text-black mb-2">Emergency Response</h3>
                         <p class="text-gray-600 text-sm">24/7 medical and disaster <br>response services.</p>
-                        <i><a href="emergency-response.html" style="color: green">Know More</a></i>
+                        <i><a href="emergency-response.html" class="text-green-600 font-medium hover:underline">Know
+                                More</a></i>
                     </div>
-                    <img src="https://img.icons8.com/ios-filled/64/000000/ambulance.png" alt="Emergency"
-                        class="h-12 w-12 mr-3">
+                    <img src="images/Emergency Response.png" alt="Emergency" class="h-24 w-36 ml-1">
                 </div>
 
                 <!-- Service Card 4 -->
-                <div class="flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
+                <div class="reveal flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
                     <div>
                         <h3 class="text-xl font-bold text-black mb-2">Ride & Escort</h3>
                         <p class="text-gray-600 text-sm">Secure and reliable transportation solutions.</p>
-                        <i><a href="ride-escort-services.html" style="color: green">Know More</a></i>
+                        <i><a href="ride-escort-services.html" class="text-green-600 font-medium hover:underline">Know
+                                More</a></i>
                     </div>
-                    <img src="https://img.icons8.com/ios-filled/64/000000/car.png" alt="Ride" class="h-12 w-12 mr-3">
+                    <img src="images/Ride.png" alt="Ride" class="h-36 w-36 ml-1">
                 </div>
 
                 <!-- Service Card 5 -->
-                <div class="flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
-                    <div>
-                        <h3 class="text-xl font-bold text-black mb-2">Smart Monitoring</h3>
-                        <p class="text-gray-600 text-sm">Advanced CCTV & remote surveillance systems.</p>
-                        <i><a href="smart-monitoring.html" style="color: green">Know More</a></i>
+                <div
+                    class="reveal flex justify-between items-center bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <!-- Text Content -->
+                    <div class="max-w-xs">
+                        <h3 class="text-xl font-bold text-black mb-2">Monitoring</h3>
+                        <p class="text-gray-600 text-sm mb-3">Advanced CCTV & remote surveillance systems.</p>
+                        <i><a href="smart-monitoring.html" class="text-green-600 font-medium hover:underline">
+                                Know More
+                            </a></i>
                     </div>
-                    <img src="https://img.icons8.com/?size=100&id=10472&format=png&color=000000" alt="Monitoring"
-                        class="h-12 w-12 mr-3">
+                    <img src="images/Security Servilance.png" alt="Smart Monitoring"
+                        class="h-36 w-36 object-contain ml-5">
                 </div>
 
+
                 <!-- Service Card 6 -->
-                <div class="flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
+                <div class="reveal flex justify-between items-center bg-white rounded-lg p-6 shadow-lg">
                     <div>
                         <h3 class="text-xl font-bold text-black mb-2">Legal Support</h3>
                         <p class="text-gray-600 text-sm">Incident reporting & legal documentation services.</p>
-                        <i><a href="legal-support-reporting.html" style="color: green">Know More</a></i>
+                        <i><a href="legal-support-reporting.html"
+                                class="text-green-600 font-medium hover:underline">Know More</a></i>
                     </div>
-                    <img src="https://img.icons8.com/ios-filled/64/000000/law.png" alt="Legal" class="h-12 w-12 mr-3">
+                    <img src="images/Leagle Support.png" alt="Legal" class="h-24 w-24 ml-1">
                 </div>
 
             </div>
@@ -362,8 +414,8 @@
 
     <!-- Response Timeline -->
     <section class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
+        <div class="max-w-6xl mx-auto px-0 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">Response Timeline In Emergency</h2>
                 <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -376,7 +428,7 @@
                 <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-200"></div>
 
                 <div class="space-y-12">
-                    <div class="flex items-center">
+                    <div class="flex items-center reveal">
                         <div class="flex-1 text-right pr-8">
                             <h3 class="text-lg font-bold text-amli-dark">
                                 <i
@@ -391,7 +443,7 @@
                         <div class="flex-1 pl-8"></div>
                     </div>
 
-                    <div class="flex items-center">
+                    <div class="flex items-center reveal">
                         <div class="flex-1 pr-8"></div>
                         <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center relative z-10">
                             <span class="text-black font-bold text-sm">5m</span>
@@ -406,7 +458,7 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center">
+                    <div class="flex items-center reveal">
                         <div class="flex-1 text-right pr-8">
                             <h3 class="text-lg font-bold text-amli-dark">
                                 <i
@@ -421,7 +473,7 @@
                         <div class="flex-1 pl-8"></div>
                     </div>
 
-                    <div class="flex items-center">
+                    <div class="flex items-center reveal">
                         <div class="flex-1 pr-8"></div>
                         <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center relative z-10">
                             <span class="text-black font-bold text-sm">20m</span>
@@ -443,7 +495,7 @@
 
     <!-- How It Works Section -->
     <section id="how-it-works" class="py-20 bg-amli-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto px-0">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">How It Works</h2>
                 <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
@@ -502,7 +554,7 @@
 
     <!-- Frequently Asked Questions -->
     <section id="faq" class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto px-0 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">Frequently Asked Questions</h2>
                 <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
@@ -514,73 +566,99 @@
             <div class="space-y-6">
                 <!-- FAQ Item 1 -->
                 <div class="bg-gray-50 rounded-lg border border-gray-200">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors" 
-                            onclick="toggleFAQ(this)">
+                    <button
+                        class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
+                        onclick="toggleFAQ(this)">
                         <h3 class="text-lg font-semibold text-amli-dark">What services does AmLI provide?</h3>
                         <i class="fas fa-chevron-down text-amli-green transition-transform" id="faq-icon-1"></i>
                     </button>
                     <div class="px-6 pb-4 hidden" id="faq-content-1">
-                        <p class="text-gray-600">AmLI provides comprehensive security solutions including private security, VIP protection, emergency response, smart monitoring, legal support, and secure transportation services. We offer 24/7 protection with trained professionals and advanced technology.</p>
+                        <p class="text-gray-600">AmLI provides comprehensive security solutions including private
+                            security, VIP protection, emergency response, smart monitoring, legal support, and secure
+                            transportation services. We offer 24/7 protection with trained professionals and advanced
+                            technology.</p>
                     </div>
                 </div>
 
                 <!-- FAQ Item 2 -->
                 <div class="bg-gray-50 rounded-lg border border-gray-200">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors" 
-                            onclick="toggleFAQ(this)">
-                        <h3 class="text-lg font-semibold text-amli-dark">How quickly can AmLI respond to emergencies?</h3>
+                    <button
+                        class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
+                        onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-semibold text-amli-dark">How quickly can AmLI respond to emergencies?
+                        </h3>
                         <i class="fas fa-chevron-down text-amli-green transition-transform" id="faq-icon-2"></i>
                     </button>
                     <div class="px-6 pb-4 hidden" id="faq-content-2">
-                        <p class="text-gray-600">Our emergency response protocol ensures rapid deployment: Alert reception within 2 minutes, team activation within 5 minutes, resource deployment within 10 minutes, and on-site intervention within 20 minutes. We maintain strategically positioned resources for immediate response.</p>
+                        <p class="text-gray-600">Our emergency response protocol ensures rapid deployment: Alert
+                            reception within 2 minutes, team activation within 5 minutes, resource deployment within 10
+                            minutes, and on-site intervention within 20 minutes. We maintain strategically positioned
+                            resources for immediate response.</p>
                     </div>
                 </div>
 
                 <!-- FAQ Item 3 -->
                 <div class="bg-gray-50 rounded-lg border border-gray-200">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors" 
-                            onclick="toggleFAQ(this)">
-                        <h3 class="text-lg font-semibold text-amli-dark">What qualifications do AmLI personnel have?</h3>
+                    <button
+                        class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
+                        onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-semibold text-amli-dark">What qualifications do AmLI personnel have?
+                        </h3>
                         <i class="fas fa-chevron-down text-amli-green transition-transform" id="faq-icon-3"></i>
                     </button>
                     <div class="px-6 pb-4 hidden" id="faq-content-3">
-                        <p class="text-gray-600">All AmLI personnel undergo rigorous training and certification programs. Our team includes experts from law enforcement, military, medical, and technology backgrounds. We maintain continuous training and adhere to national security standards and protocols.</p>
+                        <p class="text-gray-600">All AmLI personnel undergo rigorous training and certification
+                            programs. Our team includes experts from law enforcement, military, medical, and technology
+                            backgrounds. We maintain continuous training and adhere to national security standards and
+                            protocols.</p>
                     </div>
                 </div>
 
                 <!-- FAQ Item 4 -->
                 <div class="bg-gray-50 rounded-lg border border-gray-200">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors" 
-                            onclick="toggleFAQ(this)">
-                        <h3 class="text-lg font-semibold text-amli-dark">How does AmLI ensure client confidentiality?</h3>
+                    <button
+                        class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
+                        onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-semibold text-amli-dark">How does AmLI ensure client confidentiality?
+                        </h3>
                         <i class="fas fa-chevron-down text-amli-green transition-transform" id="faq-icon-4"></i>
                     </button>
                     <div class="px-6 pb-4 hidden" id="faq-content-4">
-                        <p class="text-gray-600">Client confidentiality is paramount at AmLI. We operate under strict privacy protocols and legal compliance. All information is encrypted and shared only on a need-to-know basis. Our legal team ensures compliance with data protection regulations.</p>
+                        <p class="text-gray-600">Client confidentiality is paramount at AmLI. We operate under strict
+                            privacy protocols and legal compliance. All information is encrypted and shared only on a
+                            need-to-know basis. Our legal team ensures compliance with data protection regulations.</p>
                     </div>
                 </div>
 
                 <!-- FAQ Item 5 -->
                 <div class="bg-gray-50 rounded-lg border border-gray-200">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors" 
-                            onclick="toggleFAQ(this)">
+                    <button
+                        class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
+                        onclick="toggleFAQ(this)">
                         <h3 class="text-lg font-semibold text-amli-dark">What areas does AmLI cover?</h3>
                         <i class="fas fa-chevron-down text-amli-green transition-transform" id="faq-icon-5"></i>
                     </button>
                     <div class="px-6 pb-4 hidden" id="faq-content-5">
-                        <p class="text-gray-600">AmLI provides services across India with strategic coverage in major cities and metropolitan areas. Our adaptive infrastructure allows us to extend services to new locations based on client needs. We maintain regional response centers for optimal coverage.</p>
+                        <p class="text-gray-600">AmLI provides services across India with strategic coverage in major
+                            cities and metropolitan areas. Our adaptive infrastructure allows us to extend services to
+                            new locations based on client needs. We maintain regional response centers for optimal
+                            coverage.</p>
                     </div>
                 </div>
 
                 <!-- FAQ Item 6 -->
                 <div class="bg-gray-50 rounded-lg border border-gray-200">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors" 
-                            onclick="toggleFAQ(this)">
+                    <button
+                        class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
+                        onclick="toggleFAQ(this)">
                         <h3 class="text-lg font-semibold text-amli-dark">How do I request AmLI services?</h3>
                         <i class="fas fa-chevron-down text-amli-green transition-transform" id="faq-icon-6"></i>
                     </button>
                     <div class="px-6 pb-4 hidden" id="faq-content-6">
-                        <p class="text-gray-600">Requesting AmLI services is simple: Contact us via phone, WhatsApp, or our online form. Specify your security needs, location, and timeline. We'll assign a specialized team and provide a detailed service plan. Payment is typically split: 50% upfront and 50% post-service.</p>
+                        <p class="text-gray-600">Requesting AmLI services is simple: Contact us via phone, WhatsApp, or
+                            our online form. Specify your security needs, location, and timeline. We'll assign a
+                            specialized team and provide a detailed service plan. Payment is typically split: 50%
+                            upfront and 50% post-service.</p>
                     </div>
                 </div>
             </div>
@@ -590,7 +668,7 @@
 
     <!-- Request/Offer Form -->
     <section id="request-form" class="py-20 bg-gray-50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto px-0 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">Request Security Services</h2>
                 <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
@@ -691,9 +769,11 @@
                     </div>
 
                     <div class="text-sm text-gray-600 text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
-                        <p>By selecting Submit, you agree that you have read, understand, and agree to the  <a
+                        <p>By selecting Submit, you agree that you have read, understand, and agree to the <a
                                 href="terms-of-service.html" style="color: green; text-decoration: underline;">Terms and
-                                Conditions</a> and <br><a href="privacy-policy.html" class="hover:text-amli-black" style="color: green; text-decoration: underline;">Privacy Notice</a>, including that AmLI and/or
+                                Conditions</a> and <br><a href="privacy-policy.html" class="hover:text-amli-black"
+                                style="color: green; text-decoration: underline;">Privacy Notice</a>, including that
+                            AmLI and/or
                             representatives may contact you for marketing purposes. You may opt out at any time.
                         </p>
                     </div>
@@ -717,7 +797,7 @@
 
     <!-- Footer -->
     <footer class="bg-black text-gray-400 py-12 w-full">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto px-0 sm:px-6 lg:px-8">
             <!-- Footer Content Grid -->
             <div class="grid md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
                 <!-- Logo & Description -->
@@ -821,16 +901,16 @@
         function createDetailedEmailBody(data) {
             let body = `Dear AmLI Team,
 
-I would like to request your professional security services.
+            I would like to request your professional security services.
 
-*Basic Information:*
-Name: ${data.name || 'Not provided'}
-Phone: ${data.phone || 'Not provided'}
-Service Location: ${data.location || 'Not provided'}
-Start Date: ${data['start-date'] || 'Not provided'}
-Service Duration: ${data.duration || 'Not provided'}
-Service Type: ${data['service-type'] || 'Not provided'}
-Personnel Required: ${data['personnel-count'] || 'Not specified'}`;
+            *Basic Information:*
+            Name: ${data.name || 'Not provided'}
+            Phone: ${data.phone || 'Not provided'}
+            Service Location: ${data.location || 'Not provided'}
+            Start Date: ${data['start-date'] || 'Not provided'}
+            Service Duration: ${data.duration || 'Not provided'}
+            Service Type: ${data['service-type'] || 'Not provided'}
+            Personnel Required: ${data['personnel-count'] || 'Not specified'}`;
 
             // Add service-specific fields based on service type
             const serviceType = data['service-type'];
@@ -838,53 +918,53 @@ Personnel Required: ${data['personnel-count'] || 'Not specified'}`;
             if (serviceType === 'vip-protection') {
                 body += `
 
-*VIP Protection Details:*
-VIP Level: ${data['vip-level'] || 'Not specified'}
-Threat Assessment: ${data['threat-level'] || 'Not specified'}
-Special Requirements: ${data['special-requirements'] || 'None'}`;
+            *VIP Protection Details:*
+            VIP Level: ${data['vip-level'] || 'Not specified'}
+            Threat Assessment: ${data['threat-level'] || 'Not specified'}
+            Special Requirements: ${data['special-requirements'] || 'None'}`;
             } else if (serviceType === 'ride-service') {
                 body += `
 
-*Transportation Details:*
-Pickup Location: ${data['pickup-location'] || 'Not specified'}
-Drop Location: ${data['drop-location'] || 'Not specified'}
-Ride Type: ${data['ride-type'] || 'Not specified'}
-Number of Passengers: ${data['passengers'] || 'Not specified'}`;
+            *Transportation Details:*
+            Pickup Location: ${data['pickup-location'] || 'Not specified'}
+            Drop Location: ${data['drop-location'] || 'Not specified'}
+            Ride Type: ${data['ride-type'] || 'Not specified'}
+            Number of Passengers: ${data['passengers'] || 'Not specified'}`;
             } else if (serviceType === 'emergency-response') {
                 body += `
 
-*Emergency Response Details:*
-Emergency Type: ${data['emergency-type'] || 'Not specified'}
-Urgency Level: ${data['urgency'] || 'Not specified'}`;
+            *Emergency Response Details:*
+            Emergency Type: ${data['emergency-type'] || 'Not specified'}
+            Urgency Level: ${data['urgency'] || 'Not specified'}`;
             } else if (serviceType === 'smart-monitoring') {
                 body += `
 
-*Smart Monitoring Details:*
-Monitoring Type: ${data['monitoring-type'] || 'Not specified'}
-Coverage Area: ${data['coverage-area'] || 'Not specified'}`;
+            *Smart Monitoring Details:*
+            Monitoring Type: ${data['monitoring-type'] || 'Not specified'}
+            Coverage Area: ${data['coverage-area'] || 'Not specified'}`;
             } else if (serviceType === 'private-security') {
                 body += `
 
-*Private Security Details:*
-Security Type: ${data['security-type'] || 'Not specified'}
-Security Shifts: ${data['security-shifts'] || 'Not specified'}`;
+            *Private Security Details:*
+            Security Type: ${data['security-type'] || 'Not specified'}
+            Security Shifts: ${data['security-shifts'] || 'Not specified'}`;
             } else if (serviceType === 'legal-support') {
                 body += `
 
-*Legal Support Details:*
-Legal Service Type: ${data['legal-service-type'] || 'Not specified'}
-Urgency Level: ${data['urgency-level'] || 'Not specified'}`;
+            *Legal Support Details:*
+            Legal Service Type: ${data['legal-service-type'] || 'Not specified'}
+            Urgency Level: ${data['urgency-level'] || 'Not specified'}`;
             }
 
             body += `
 
-*Additional Information:*
-${data['additional-info'] || 'None'}
+            *Additional Information:*
+            ${data['additional-info'] || 'None'}
 
-Please contact me for further coordination and service deployment.
+            Please contact me for further coordination and service deployment.
 
-Best regards,
-${data.name || 'Client'}`;
+            Best regards,
+            ${data.name || 'Client'}`;
 
             return body.trim();
         }
@@ -1326,7 +1406,7 @@ Please help me with professional security services. Thank you!`;
         function toggleFAQ(button) {
             const content = button.nextElementSibling;
             const icon = button.querySelector('i');
-            
+
             // Toggle content visibility
             if (content.classList.contains('hidden')) {
                 content.classList.remove('hidden');
