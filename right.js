@@ -1,6 +1,6 @@
-// document.addEventListener('contextmenu', function (e) {
-//     e.preventDefault();
-// });
+document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+});
 
 // Viewport-based reveal animations for Services section
 (function () {
