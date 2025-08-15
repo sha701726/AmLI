@@ -30,18 +30,7 @@
             overflow-x: hidden;
         }
 
-        .rotating-badge {
-            width: 200px;
-            height: auto;
-            animation: spin 20s linear infinite;
-            transform-style: preserve-3d;
-        }
-
-        @keyframes spin {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
-        }
-
+        
         .service-card {
             transition: all 0.3s ease;
         }
@@ -247,6 +236,57 @@
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         }
 
+        .rotating-badge {
+            width: 200px;
+            height: auto;
+            animation: spin 20s linear infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotateY(0deg);
+            }
+
+            100% {
+                transform: rotateY(360deg);
+                /* Left to Right */
+            }
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+            /* Optional dark bg */
+        }
+
+        /* Mobile navbar improvements */
+        @media (max-width: 768px) {
+            #mobile-menu-btn {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+
+            nav {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 1000 !important;
+            }
+
+            #mobile-menu {
+                position: absolute !important;
+                top: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 999 !important;
+            }
+        }
+
         /* Icon animations */
         .icon-animate {
             transition: all 0.3s ease;
@@ -296,11 +336,6 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
-        /* Loading animation for images */
-        .image-load {
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 0.5s forwards;
-        }
 
         /* Scroll-triggered animations */
         .scroll-animate {
@@ -449,7 +484,7 @@
                     </div>
                 </div>
                 <div class="flex justify-center animate-fade-in-right">
-                    <img src="images/3D.png" alt="Adaptive Infrastructure Badge" class="rotating-badge image-load" />
+                    <img src="images/3D.png" alt="Adaptive Infrastructure Badge" class="rotating-badge" />
                 </div>
             </div>
         </div>
@@ -1105,13 +1140,6 @@
             });
         });
 
-        // Add loading animation to images
-        document.querySelectorAll('.image-load').forEach(img => {
-            img.addEventListener('load', function() {
-                this.style.opacity = '1';
-            });
-        });
-
         // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1126,15 +1154,6 @@
             });
         });
 
-        // Add parallax effect to hero section
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.rotating-badge');
-            if (parallax) {
-                const speed = scrolled * 0.5;
-                parallax.style.transform = `translateY(${speed}px) rotateY(${scrolled * 0.1}deg)`;
-            }
-        });
 
         // Initialize animations on page load
         window.addEventListener('load', function() {
@@ -1214,7 +1233,7 @@
             });
 
             if (!isValid) {
-                alert('⚠️ Please fill in all required fields.');
+                alert('Please fill in all required fields.');
                 return;
             }
 
@@ -1226,7 +1245,7 @@
             const mailto = `mailto:sha701726@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             window.location.href = mailto;
 
-            alert('✅ Your booking details are ready! Please send the email to complete your request.');
+            alert('Your booking details are ready! Please send the email to complete your request.');
         });
 
     </script>
