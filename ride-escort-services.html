@@ -918,81 +918,116 @@
                     <form class="space-y-4">
                         <!-- Full Name -->
                         <div class="grid md:grid-cols-2 gap-4">
-                            <input type="text" placeholder="First Name *" name="first-name" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
-                            <input type="text" placeholder="Last Name *" name="last-name" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                            <div>
+                                <label for="first-name" class="block mb-1 font-medium text-white">First Name *</label>
+                                <input type="text" id="first-name" placeholder="First Name *" name="first-name" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                            </div>
+                            <div>
+                                <label for="last-name" class="block mb-1 font-medium text-white">Last Name *</label>
+                                <input type="text" id="last-name" placeholder="Last Name *" name="last-name" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                            </div>
                         </div>
                     
                         <!-- Contact Info -->
-                        <input type="email" placeholder="Email Address" name="email"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
-                        <input type="tel" placeholder="Phone Number *" name="phone" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
-
+                        <div>
+                            <label for="email" class="block mb-1 font-medium text-white">Email Address</label>
+                            <input type="email" id="email" placeholder="Email Address" name="email"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                        </div>
+                        <div>
+                            <label for="phone" class="block mb-1 font-medium text-white">Phone Number *</label>
+                            <input type="tel" id="phone" placeholder="Phone Number *" name="phone" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                        </div>
+                    
                         <!-- Pickup & Drop-off -->
                         <div class="grid md:grid-cols-2 gap-4">
-                            <input type="text" placeholder="Pickup Location *" name="pickup-location" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
-                            <input type="text" placeholder="Drop-off Location *" name="dropoff-location" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                            <div>
+                                <label for="pickup-location" class="block mb-1 font-medium text-white">Pickup Location *</label>
+                                <input type="text" id="pickup-location" placeholder="Pickup Location *" name="pickup-location" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                            </div>
+                            <div>
+                                <label for="dropoff-location" class="block mb-1 font-medium text-white">Drop-off Location *</label>
+                                <input type="text" id="dropoff-location" placeholder="Drop-off Location *" name="dropoff-location" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                            </div>
                         </div>
                     
                         <!-- Start Date & Preferred Time -->
                         <div class="grid md:grid-cols-2 gap-4">
-                            <input type="date" name="start-date" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
-                            <input type="time" name="preferred-time" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                            <div>
+                                <label for="start-date" class="block mb-1 font-medium text-white">Start Date *</label>
+                                <input type="date" id="start-date" name="start-date" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                            </div>
+                            <div>
+                                <label for="preferred-time" class="block mb-1 font-medium text-white">Preferred Time *</label>
+                                <input type="time" id="preferred-time" name="preferred-time" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                            </div>
                         </div>
                     
                         <!-- Service Duration -->
-                        <select name="duration" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
-                            <option value="">Select Service Duration *</option>
-                            <option value="daily">Daily (8-12 hours)</option>
-                            <option value="weekly">Weekly Contract</option>
-                            <option value="monthly">Monthly Contract</option>
-                            <option value="single event">Single Event</option>
-                            <option value="emergency">Emergency (Immediate)</option>
-                        </select>
+                        <div>
+                            <label for="duration" class="block mb-1 font-medium text-white">Service Duration *</label>
+                            <select id="duration" name="duration" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                                <option value="">Select Service Duration *</option>
+                                <option value="daily">Daily (8-12 hours)</option>
+                                <option value="weekly">Weekly Contract</option>
+                                <option value="monthly">Monthly Contract</option>
+                                <option value="single event">Single Event</option>
+                                <option value="emergency">Emergency (Immediate)</option>
+                            </select>
+                        </div>
                     
                         <!-- Transportation Type -->
-                        <select name="transport-type" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
-                            <option value="">Select Transportation Type *</option>
-                            <option>Individual Pickup</option>
-                            <option>Group Travel</option>
-                            <option>Event Transport</option>
-                            <option>Corporate Shuttle</option>
-                            <option>Custom Route Planning</option>
-                        </select>
+                        <div>
+                            <label for="transport-type" class="block mb-1 font-medium text-white">Transportation Type *</label>
+                            <select id="transport-type" name="transport-type" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                                <option value="">Select Transportation Type *</option>
+                                <option>Individual Pickup</option>
+                                <option>Group Travel</option>
+                                <option>Event Transport</option>
+                                <option>Corporate Shuttle</option>
+                                <option>Custom Route Planning</option>
+                            </select>
+                        </div>
                     
                         <!-- Personnel Count -->
-                        <select name="personnel-count"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
-                            <option value="">Select Number of Personnel</option>
-                            <option value="1">1 Person</option>
-                            <option value="2-3">2-3 People</option>
-                            <option value="4-6">4-6 People</option>
-                            <option value="7-10">7-10 People</option>
-                            <option value="more">More than 10 People</option>
-                        </select>
+                        <div>
+                            <label for="personnel-count" class="block mb-1 font-medium text-white">Number of Personnel</label>
+                            <select id="personnel-count" name="personnel-count"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input">
+                                <option value="">Select Number of Personnel</option>
+                                <option value="1">1 Person</option>
+                                <option value="2-3">2-3 People</option>
+                                <option value="4-6">4-6 People</option>
+                                <option value="7-10">7-10 People</option>
+                                <option value="more">More than 10 People</option>
+                            </select>
+                        </div>
                     
                         <!-- Additional Info -->
-                        <textarea placeholder="Additional Information (Special requirements, multiple stops, etc.)"
-                            name="additional-info" rows="4"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input"></textarea>
+                        <div>
+                            <label for="additional-info" class="block mb-1 font-medium text-white">Additional Information</label>
+                            <textarea id="additional-info" placeholder="Special requirements, multiple stops, etc."
+                                name="additional-info" rows="4"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-black focus:outline-none text-black form-input"></textarea>
+                        </div>
                     
                         <!-- Submit -->
                         <button type="submit"
-                        class="w-full bg-black text-white px-6 py-3 rounded-lg font-semibold 
-                        hover:bg-gray-600 hover:scale-105 hover:shadow-lg 
-                        transition-all duration-300 ease-in-out">
+                            class="w-full bg-black text-white px-6 py-3 rounded-lg font-semibold 
+                            hover:bg-gray-600 hover:scale-105 hover:shadow-lg 
+                            transition-all duration-300 ease-in-out">
                             Book Transportation Services
                         </button>
-                    </form>
-                    
+                    </form>                 
                 </div>
             </div>
         </div>
