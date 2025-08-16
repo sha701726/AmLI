@@ -152,6 +152,14 @@
                 transition: none !important;
             }
         }
+
+
+
+        .request-service {
+            background-image: url("images/Back.jpg");
+            background-size: cover;
+            background-position: center;
+        }
     </style>
 </head>
 
@@ -214,7 +222,6 @@
         <div class="hidden md:block absolute inset-0 z-0 bg-center bg-cover bg-no-repeat"
             style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/image.jpg'); filter: blur(2px); transform: scale(1.1); background-blend-mode: darken;">
         </div>
-
         <!-- Content -->
         <div class="relative z-10 max-w-4xl mx-auto text-center text-white">
             <div class="badge-container">
@@ -411,95 +418,14 @@
         </div>
     </section>
 
-
-    <!-- Response Timeline -->
-    <section class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-0 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">Response Timeline In Emergency</h2>
-                <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
-                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                    <i>Our instantaneous intervention protocol ensures rapid response times through optimized deployment
-                        strategies and pre-positioned resources.</i>
-                </p>
-            </div>
-
-            <div class="relative">
-                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-200"></div>
-
-                <div class="space-y-12">
-                    <div class="flex items-center reveal">
-                        <div class="flex-1 text-right pr-8">
-                            <h3 class="text-lg font-bold text-amli-dark">
-                                <i
-                                    class="fas fa-bell text-amli-black text-3xl mr-3 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]"></i>
-                                Alert Reception
-                            </h3>
-                            <p class="text-gray-600">Immediate alert processing and situation assessment</p>
-                        </div>
-                        <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center relative z-10">
-                            <span class="text-black font-bold text-sm">2m</span>
-                        </div>
-                        <div class="flex-1 pl-8"></div>
-                    </div>
-
-                    <div class="flex items-center reveal">
-                        <div class="flex-1 pr-8"></div>
-                        <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center relative z-10">
-                            <span class="text-black font-bold text-sm">5m</span>
-                        </div>
-                        <div class="flex-1 text-left pl-8">
-                            <h3 class="text-lg font-bold text-amli-dark">
-                                <i
-                                    class="fas fa-users text-amli-black text-3xl mr-3 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]"></i>
-                                Team Activation
-                            </h3>
-                            <p class="text-gray-600">Specialized response teams activated and briefed</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center reveal">
-                        <div class="flex-1 text-right pr-8">
-                            <h3 class="text-lg font-bold text-amli-dark">
-                                <i
-                                    class="fas fa-truck text-amli-black text-3xl mr-3 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]"></i>
-                                Resource Deployment
-                            </h3>
-                            <p class="text-gray-600">Equipment and personnel deployed to incident location</p>
-                        </div>
-                        <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center relative z-10">
-                            <span class="text-black font-bold text-sm">10m</span>
-                        </div>
-                        <div class="flex-1 pl-8"></div>
-                    </div>
-
-                    <div class="flex items-center reveal">
-                        <div class="flex-1 pr-8"></div>
-                        <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center relative z-10">
-                            <span class="text-black font-bold text-sm">20m</span>
-                        </div>
-                        <div class="flex-1 text-left pl-8">
-                            <h3 class="text-lg font-bold text-amli-dark">
-                                <i
-                                    class="fas fa-shield-alt text-amli-black text-3xl mr-3 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)]"></i>
-                                On-Site Intervention
-                            </h3>
-                            <p class="text-gray-600">Active intervention and crisis stabilization begins</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
     <!-- How It Works Section -->
-    <section id="how-it-works" class="py-20 bg-amli-white">
+    <section id="how-it-works"
+        class="py-20 bg-amli-white how-it-works-bg min-h-screen flex items-center justify-center px-4 pt-16 ">
         <div class="max-w-6xl mx-auto px-0">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">How It Works</h2>
                 <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p class="text-lg max-w-2xl mx-auto" style="color: black;">
                     <i>Getting help from AmLI’s expert security team is simple and reliable.</i>
                     <br><i>Here’s how it works :</i>
                 </p>
@@ -510,8 +436,7 @@
                 <div
                     class="bg-white shadow-lg rounded-2xl p-6 text-center transition-transform hover:-translate-y-1 hover:shadow-xl">
                     <div class="flex justify-center mb-4">
-                        <i
-                            class="fas fa-phone-alt text-amli-black text-3xl drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] transform rotate-x-6 rotate-y-6 scale-105"></i>
+                        <img src="images/customer_support.png" alt="Phone" class="w-10 h-10 ">
                     </div>
                     <h3 class="text-xl font-bold text-amli-dark mb-3">Contact Us</h3>
                     <p class="text-gray-600">
@@ -524,8 +449,7 @@
                 <div
                     class="bg-white shadow-lg rounded-2xl p-6 text-center transition-transform hover:-translate-y-1 hover:shadow-xl">
                     <div class="flex justify-center mb-4">
-                        <i
-                            class="fas fa-user-shield text-amli-black text-3xl drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] transform rotate-x-6 rotate-y-6 scale-105"></i>
+                        <img src="images/Team_assigning.png" alt="Team" class="w-11 h-11">
                     </div>
                     <h3 class="text-xl font-bold text-amli-dark mb-3">Get Assigned a Team</h3>
                     <p class="text-gray-600">
@@ -538,8 +462,7 @@
                 <div
                     class="bg-white shadow-lg rounded-2xl p-6 text-center transition-transform hover:-translate-y-1 hover:shadow-xl">
                     <div class="flex justify-center mb-4">
-                        <i
-                            class="fas fa-shield-alt text-amli-black text-3xl drop-shadow-[2px_2px_2px_rgba(0,0,0,0.5)] transform rotate-x-6 rotate-y-6 scale-105"></i>
+                        <img src="images/globe-grid.png" alt="Secure" class="w-10 h-10">
                     </div>
                     <h3 class="text-xl font-bold text-amli-dark mb-3">Secure & Support</h3>
                     <p class="text-gray-600">
@@ -550,7 +473,6 @@
             </div>
         </div>
     </section>
-
 
     <!-- Frequently Asked Questions -->
     <section id="faq" class="py-20 bg-white">
@@ -585,40 +507,6 @@
                     <button
                         class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
                         onclick="toggleFAQ(this)">
-                        <h3 class="text-lg font-semibold text-amli-dark">How quickly can AmLI respond to emergencies?
-                        </h3>
-                        <i class="fas fa-chevron-down text-amli-green transition-transform" id="faq-icon-2"></i>
-                    </button>
-                    <div class="px-6 pb-4 hidden" id="faq-content-2">
-                        <p class="text-gray-600">Our emergency response protocol ensures rapid deployment: Alert
-                            reception within 2 minutes, team activation within 5 minutes, resource deployment within 10
-                            minutes, and on-site intervention within 20 minutes. We maintain strategically positioned
-                            resources for immediate response.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Item 3 -->
-                <div class="bg-gray-50 rounded-lg border border-gray-200">
-                    <button
-                        class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
-                        onclick="toggleFAQ(this)">
-                        <h3 class="text-lg font-semibold text-amli-dark">What qualifications do AmLI personnel have?
-                        </h3>
-                        <i class="fas fa-chevron-down text-amli-green transition-transform" id="faq-icon-3"></i>
-                    </button>
-                    <div class="px-6 pb-4 hidden" id="faq-content-3">
-                        <p class="text-gray-600">All AmLI personnel undergo rigorous training and certification
-                            programs. Our team includes experts from law enforcement, military, medical, and technology
-                            backgrounds. We maintain continuous training and adhere to national security standards and
-                            protocols.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Item 4 -->
-                <div class="bg-gray-50 rounded-lg border border-gray-200">
-                    <button
-                        class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
-                        onclick="toggleFAQ(this)">
                         <h3 class="text-lg font-semibold text-amli-dark">How does AmLI ensure client confidentiality?
                         </h3>
                         <i class="fas fa-chevron-down text-amli-green transition-transform" id="faq-icon-4"></i>
@@ -630,7 +518,7 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 5 -->
+                <!-- FAQ Item 3 -->
                 <div class="bg-gray-50 rounded-lg border border-gray-200">
                     <button
                         class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
@@ -646,7 +534,7 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 6 -->
+                <!-- FAQ Item 4 -->
                 <div class="bg-gray-50 rounded-lg border border-gray-200">
                     <button
                         class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
@@ -667,7 +555,7 @@
 
 
     <!-- Request/Offer Form -->
-    <section id="request-form" class="py-20 bg-gray-50">
+    <section id="request-form" class="py-20 bg-gray-50 request-service">
         <div class="max-w-4xl mx-auto px-0 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">Request Security Services</h2>
@@ -1419,4 +1307,5 @@ Please help me with professional security services. Thank you!`;
     </script>
     <script src="right.js"></script>
 </body>
+
 </html>
