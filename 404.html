@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmLI - Adaptive Monitoring Layered Intelligence</title>
+    <link rel="icon" type="png" href="AmLI.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'amli-dark': '#2A2D34',
+                        'amli-gray': '#C0C0C0',
+                        'amli-white': '#FFFFFF'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            background: Black;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: gray;
+            transform: translateY(-2px);
+        }
+
+        .service-card {
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(71, 69, 69, 0.1);
+        }
+
+        .rotating-badge {
+            width: 350px;
+            height: auto;
+            animation: spin 20s linear infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotateY(0deg);
+            }
+
+            100% {
+                transform: rotateY(360deg);
+                /* Left to Right */
+            }
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+            /* Optional dark bg */
+        }
+
+        /* Mobile navbar improvements */
+        @media (max-width: 768px) {
+            #mobile-menu-btn {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+
+            nav {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 1000 !important;
+            }
+
+            #mobile-menu {
+                position: absolute !important;
+                top: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 999 !important;
+            }
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            background: linear-gradient(90deg, black);
+        }
+
+        .star {
+            background: grey;
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            content: '';
+            border-radius: 100%;
+            transform: rotate(250deg);
+            opacity: 0.4;
+            animation-name: shimmer;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+
+        @keyframes shimmer {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 0.7;
+            }
+        }
+
+        .star1 {
+            top: 40%;
+            left: 50%;
+            animation-delay: 1s;
+        }
+
+        .star2 {
+            top: 60%;
+            left: 90%;
+            animation-delay: 3s;
+        }
+
+        .star3 {
+            top: 10%;
+            left: 70%;
+            animation-delay: 2s;
+        }
+
+        .star4 {
+            top: 90%;
+            left: 40%;
+        }
+
+        .star5 {
+            top: 20%;
+            left: 30%;
+            animation-delay: 0.5s;
+        }
+
+        .error {
+            position: absolute;
+            left: 100px;
+            top: 400px;
+            transform: translateY(-60%);
+            font-family: 'Righteous', cursive;
+            color: #363e49;
+        }
+
+        .error__title {
+            font-size: 10em;
+        }
+
+        .error__subtitle {
+            font-size: 2em;
+        }
+
+        .error__description {
+            opacity: 0.5;
+        }
+
+        .error__button {
+            min-width: 7em;
+            margin-top: 3em;
+            margin-right: 0.5em;
+            padding: 0.5em 2em;
+            outline: none;
+            border: 2px solid #2f3640;
+            background-color: transparent;
+            border-radius: 8em;
+            color: #576375;
+            cursor: pointer;
+            transition-duration: 0.2s;
+            font-size: 0.75em;
+            font-family: 'Righteous', cursive;
+        }
+
+        .error__button:hover {
+            color: #21252c;
+        }
+
+        .error__button--active {
+            background-color: #e67e22;
+            border: 2px solid #e67e22;
+            color: white;
+        }
+
+        .error__button--active:hover {
+            box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="AmLI.png" alt="AmLI Logo" height="50" width="70">
+                    <span class="ml-2 text-black font-bold text-xs sm:text-sm block">
+                        ADAPTIVE MONITORING LAYERED INTELLIGENCE
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 404 Section -->
+    <section class="relative flex flex-col justify-center items-center min-h-screen text-center px-4 pt-24">
+        <!-- Stars Background -->
+        <div class="star star1"></div>
+        <div class="star star2"></div>
+        <div class="star star3"></div>
+        <div class="star star4"></div>
+        <div class="star star5"></div>
+
+        <!-- Error Content -->
+        <div class="relative z-10 max-w-2xl">
+            <div class="text-6xl md:text-9xl font-bold">404</div>
+            <div class="text-xl md:text-3xl font-semibold mt-2">Hmmm...</div>
+            <p class="text-gray-300 italic mt-4 leading-relaxed text-sm sm:text-base md:text-lg">
+                This page is currently under construction and not accessible right now. <br>
+                Our team is working tirelessly to bring you an exceptional experience. <br>
+                <span class="font-semibold">Please visit again later!</span>
+            </p>
+            <a href="index.html"
+                class="inline-block mt-6 sm:mt-8 px-6 py-3 rounded-full bg-orange-600 hover:bg-orange-700 transition transform hover:scale-105 text-white font-semibold">
+                GO BACK TO HOME
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-12 w-full">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Footer Grid -->
+            <div class="grid md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
+                <!-- Logo & Description -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-4">AmLI</h3>
+                    <p class="text-gray-400 mb-4 italic">
+                        Adaptive Monitoring Layered Intelligence — Professional security and support services
+                        powered by expertise of all professional pillars across India.
+                    </p>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="https://x.com/AmLI_services" target="_blank"
+                            class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/nitin-kumar-8890b236a/" target="_blank"
+                            class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+                        <li><a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Contact Info</h4>
+                    <ul class="space-y-2">
+                        <li class="flex justify-center md:justify-start items-center">
+                            <i class="fas fa-phone mr-2"></i>
+                            <span>+91 70172 67400</span>
+                        </li>
+                        <li class="flex justify-center md:justify-start items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <span>sha701726@gmail.com</span>
+                        </li>
+                        <li class="flex justify-center md:justify-start items-center">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Delhi City, India</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-gray-600 pt-8 flex justify-center">
+                <p class="text-sm text-gray-400 text-center">
+                    &copy; 2025 AmLI. All rights reserved. | Adaptive Monitoring Layered Intelligence
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
