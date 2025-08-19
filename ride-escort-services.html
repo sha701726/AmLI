@@ -1268,8 +1268,7 @@
             }
 
             // ✅ Send data to backend API
-            await fetch("/api/submit-request", 
-            {
+            await fetch("/Api/submit-request", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(allFormData),
