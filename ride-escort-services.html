@@ -1238,7 +1238,7 @@
         }
 
         // Handle form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('form').addEventListener('submit', async  function(e) {
             e.preventDefault();
 
             const allFormData = collectFormData(this);
@@ -1266,6 +1266,13 @@
                 alert('Please fill in all required fields.');
                 return;
             }
+
+            // ✅ Send data to backend API
+            await fetch("/api/submit-request", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(allFormData),
+            });
 
             // Build email
             const subject = `Transportation Booking - ${allFormData['first-name']} ${allFormData['last-name']}`;
