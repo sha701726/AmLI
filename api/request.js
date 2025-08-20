@@ -1,120 +1,62 @@
-// api/request.js
 import { google } from "googleapis";
 
-// Auth with Service Account using environment variables
-const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
-const auth = new google.auth.JWT(
-  process.env.GOOGLE_CLIENT_EMAIL,
-  null,
-  process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
-  SCOPES
-);
-
-const sheets = google.sheets({ version: "v4", auth });
-
-// Your Google Sheet ID & Name from environment variables
-const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
-const SHEET_NAME = process.env.SHEET_NAME || "AmLI_Service_Requests";
-
-// Generate Request ID
-function makeRequestId() {
-  const pad2 = (n) => String(n).padStart(2, "0");
-  const now = new Date();
-  const yyyy = now.getFullYear();
-  const mm = pad2(now.getMonth() + 1);
-  const dd = pad2(now.getDate());
-  const hh = pad2(now.getHours());
-  const mi = pad2(now.getMinutes());
-  const ss = pad2(now.getSeconds());
-  const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
-  return `TRN-${yyyy}${mm}${dd}-${hh}${mi}${ss}-${rand}`;
-}
-
-// Serverless function handler
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ ok: false, error: "Method Not Allowed" });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
-    const body = req.body;
+    const auth = new google.auth.JWT(
+      process.env.GOOGLE_CLIENT_EMAIL,
+      null,
+      process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      ["https://www.googleapis.com/auth/spreadsheets"]
+    );
 
-    // Extract form data
-    const data = {
-      firstName: body["first-name"] || "",
-      lastName: body["last-name"] || "",
-      email: body["email"] || "",
-      phone: body["phone"] || "",
-      pickup: body["pickup-location"] || "",
-      dropoff: body["dropoff-location"] || "",
-      startDate: body["start-date"] || "",
-      preferredTime: body["preferred-time"] || "",
-      duration: body["duration"] || "",
-      transportType: body["transport-type"] || "",
-      personnelCount: body["personnel-count"] || "",
-      additionalInfo: body["additional-info"] || "",
-      status: body["status"] || "Pending",
-    };
+    const sheets = google.sheets({ version: "v4", auth });
 
-    // Validate required fields
-    const required = [
-      "firstName",
-      "lastName",
-      "phone",
-      "pickup",
-      "dropoff",
-      "startDate",
-      "preferredTime",
-      "duration",
-      "transportType",
-    ];
-    const missing = required.filter((k) => !String(data[k]).trim());
-    if (missing.length) {
-      return res.status(422).json({ ok: false, error: "Missing fields", missing });
-    }
+    const {
+      "first-name": firstName,
+      "last-name": lastName,
+      email,
+      phone,
+      "pickup-location": pickupLocation,
+      "dropoff-location": dropoffLocation,
+      "start-date": startDate,
+      "preferred-time": preferredTime,
+      duration,
+      "transport-type": transportType,
+      "personnel-count": personnelCount,
+      "additional-info": additionalInfo,
+    } = req.body;
 
-    // Auto-generated fields
-    const now = new Date();
-    const requestId = makeRequestId();
-
-    // Find Serial No. by counting rows
-    const sheet = await sheets.spreadsheets.values.get({
-      spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A:A`, // Column A (Serial No.)
-    });
-    const serial = sheet.data.values ? sheet.data.values.length : 1;
-
-    // Row in the right order
     const row = [
-      serial, // Serial No.
-      now.toISOString(), // Request Timestamp
-      data.firstName,
-      data.lastName,
-      data.email,
-      data.phone,
-      data.pickup,
-      data.dropoff,
-      data.startDate,
-      data.preferredTime,
-      data.duration,
-      data.transportType,
-      data.personnelCount,
-      data.additionalInfo,
-      requestId,
-      data.status,
+      new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }), // Request Timestamp
+      firstName,
+      lastName,
+      email,
+      phone,
+      pickupLocation,
+      dropoffLocation,
+      startDate,
+      preferredTime,
+      duration,
+      transportType,
+      personnelCount,
+      additionalInfo,
+      `REQ-${Date.now()}`, // Unique Request ID
     ];
 
-    // Append row to Google Sheet
     await sheets.spreadsheets.values.append({
-      spreadsheetId: SPREADSHEET_ID,
-      range: SHEET_NAME,
+      spreadsheetId: process.env.SPREADSHEET_ID,
+      range: `${process.env.SHEET_NAME}!A:N`,
       valueInputOption: "USER_ENTERED",
       requestBody: { values: [row] },
     });
 
-    res.status(200).json({ ok: true, message: "Saved", requestId, serial });
+    res.status(200).json({ success: true, message: "Request saved!" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ ok: false, error: err.message });
+    res.status(500).json({ error: "Failed to save request" });
   }
 }
