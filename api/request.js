@@ -1,11 +1,7 @@
-// server.js
-import express from "express";
+// api/request.js
 import { google } from "googleapis";
 
-const app = express();
-app.use(express.json());
-
-// Auth with Service Account using ENV variables
+// Auth with Service Account using environment variables
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 const auth = new google.auth.JWT(
   process.env.GOOGLE_CLIENT_EMAIL,
@@ -16,11 +12,11 @@ const auth = new google.auth.JWT(
 
 const sheets = google.sheets({ version: "v4", auth });
 
-// Your Google Sheet ID & Name from ENV
+// Your Google Sheet ID & Name from environment variables
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
 const SHEET_NAME = process.env.SHEET_NAME || "AmLI_Service_Requests";
 
-// Generate Request Id
+// Generate Request ID
 function makeRequestId() {
   const pad2 = (n) => String(n).padStart(2, "0");
   const now = new Date();
@@ -34,8 +30,12 @@ function makeRequestId() {
   return `TRN-${yyyy}${mm}${dd}-${hh}${mi}${ss}-${rand}`;
 }
 
-// API Endpoint
-app.post("/api/submit-request", async (req, res) => {
+// Serverless function handler
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ ok: false, error: "Method Not Allowed" });
+  }
+
   try {
     const body = req.body;
 
@@ -77,7 +77,6 @@ app.post("/api/submit-request", async (req, res) => {
     const now = new Date();
     const requestId = makeRequestId();
 
-    // Every this is fine
     // Find Serial No. by counting rows
     const sheet = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
@@ -113,12 +112,9 @@ app.post("/api/submit-request", async (req, res) => {
       requestBody: { values: [row] },
     });
 
-    res.json({ ok: true, message: "Saved", requestId, serial });
+    res.status(200).json({ ok: true, message: "Saved", requestId, serial });
   } catch (err) {
     console.error(err);
     res.status(500).json({ ok: false, error: err.message });
   }
-});
-
-// Start server (for local dev; Vercel will handle prod)
-app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+}
