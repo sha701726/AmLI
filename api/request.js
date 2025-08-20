@@ -35,7 +35,7 @@ function makeRequestId() {
 }
 
 // API Endpoint
-app.post("/submit-request", async (req, res) => {
+app.post("/api/submit-request", async (req, res) => {
   try {
     const body = req.body;
 
