@@ -77,6 +77,7 @@ app.post("/api/submit-request", async (req, res) => {
     const now = new Date();
     const requestId = makeRequestId();
 
+    // Every this is fine
     // Find Serial No. by counting rows
     const sheet = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
