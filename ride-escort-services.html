@@ -1247,12 +1247,15 @@
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.error || "Failed to submit request");
 
-                // Build & Open Email
-                const subject = `Transportation Booking - ${formData['first-name']} ${formData['last-name']}`;
-                const body = createTransportationEmailBody(formData);
-                window.location.href = `mailto:sha701726@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-                alert('Your booking details are ready! Please send the email to complete your request.');
+                if (result.emailSent) {
+                    alert('Your booking was saved and email has been sent successfully.');
+                } else {
+                    // Fallback to mailto
+                    const subject = `Transportation Booking - ${formData['first-name']} ${formData['last-name']}`;
+                    const body = createTransportationEmailBody(formData);
+                    window.location.href = `mailto:${(window.EMAIL_TO||'sha701726@gmail.com')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    alert('Email service not available; opened your email client to send manually.');
+                }
             } catch (err) {
                 alert(`Error: ${err.message}`);
             }

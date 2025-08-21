@@ -2,7 +2,9 @@
   "name": "amli",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "dependencies": {
-    "googleapis": "^133.0.0"
+    "googleapis": "^133.0.0",
+    "resend": "^4.0.0"
   }
 }
