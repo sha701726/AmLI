@@ -1224,10 +1224,10 @@
         }
 
         /* ------------------------------
-        Handle Form Submission (Email-only, no backend)
+        Handle Form Submission (Save + Email)
         ------------------------------ */
         const SUPPORT_EMAIL = (window.EMAIL_TO || 'sha701726@gmail.com');
-        document.querySelector('form')?.addEventListener('submit', function (e) {
+        document.querySelector('form')?.addEventListener('submit', async function (e) {
             e.preventDefault();
             const formData = collectFormData(this);
 
@@ -1243,18 +1243,32 @@
                 return;
             }
 
-            const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-            const reqId = `REQ-${Date.now()}`;
-            const emailData = { ...formData, 'request-timestamp': timestamp, 'request-id': reqId };
+            // Try saving to API first; always proceed to opening email
+            let reqId = `REQ-${Date.now()}`;
+            let timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+            try {
+                const resp = await fetch('/api/request', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ...formData, 'request-id': reqId, 'request-timestamp': timestamp })
+                });
+                const result = await resp.json();
+                if (!resp.ok) throw new Error(result.error || 'Failed to save');
+                reqId = result.requestId || reqId;
+                timestamp = timestamp || result.requestTimestamp;
+            } catch (err) {
+                console.warn('Save failed, proceeding with email only:', err);
+            }
 
+            const emailData = { ...formData, 'request-timestamp': timestamp, 'request-id': reqId };
             const subject = `Transportation Booking - ${formData['first-name']} ${formData['last-name']} - ${reqId}`;
             const body = createTransportationEmailBody(emailData);
             window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-            alert('Your email client has been opened with the request details.');
+            alert('We opened your email client. If saving failed, we still received your email.');
         });
     </script>
-
+    <script>window.EMAIL_TO = "sha701726@gmail.com";</script>
     <script src="right.js"></script>
 </body>
 </html> 
