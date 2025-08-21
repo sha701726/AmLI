@@ -1164,6 +1164,38 @@
     });
 
     /* ------------------------------
+       Disable Past Dates and Times
+    ------------------------------ */
+    const dateInput = document.getElementById('start-date');
+    const timeInput = document.getElementById('preferred-time');
+
+    function pad2(n) { return String(n).padStart(2, '0'); }
+    function todayLocal() {
+        const d = new Date();
+        return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+    }
+    function nowTimeLocal() {
+        const d = new Date();
+        return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+    }
+    function updateDateTimeConstraints() {
+        if (!dateInput || !timeInput) return;
+        const today = todayLocal();
+        dateInput.min = today;
+        if (dateInput.value === today) {
+            const nowT = nowTimeLocal();
+            timeInput.min = nowT;
+            if (timeInput.value && timeInput.value < nowT) {
+                timeInput.value = nowT;
+            }
+        } else {
+            timeInput.removeAttribute('min');
+        }
+    }
+    dateInput?.addEventListener('change', updateDateTimeConstraints);
+    updateDateTimeConstraints();
+
+    /* ------------------------------
        Email Body Generator
     ------------------------------ */
     function createTransportationEmailBody(data) {
@@ -1252,12 +1284,18 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ...formData, 'request-id': reqId, 'request-timestamp': timestamp })
                 });
-                const result = await resp.json();
-                if (!resp.ok) throw new Error(result.error || 'Failed to save');
-                reqId = result.requestId || reqId;
-                timestamp = timestamp || result.requestTimestamp;
+                let raw = await resp.text();
+                let result;
+                try { result = JSON.parse(raw); } catch {}
+                if (!resp.ok) {
+                    const msg = (result && (result.error || result.message)) ? (result.error || result.message) : (raw || 'Failed to save');
+                    throw new Error(msg);
+                }
+                reqId = (result && result.requestId) || reqId;
+                timestamp = (result && result.requestTimestamp) || timestamp;
             } catch (err) {
                 console.warn('Save failed, proceeding with email only:', err);
+                alert(`Save failed: ${err.message}. We will still open your email.`);
             }
 
             const emailData = { ...formData, 'request-timestamp': timestamp, 'request-id': reqId };

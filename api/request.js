@@ -73,14 +73,36 @@ export default async function handler(req, res) {
     const requestId = providedRequestId || `REQ-${Date.now()}`;
 
     // Compute Serial No. by counting existing filled rows in column A
-    const sheetName = process.env.SHEET_NAME;
     const spreadsheetId = process.env.SPREADSHEET_ID;
-    const colA = await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range: `${sheetName}!A:A`,
-      majorDimension: "ROWS",
-    });
-    const colAValues = colA.data.values || [];
+    const configuredSheetName = (process.env.SHEET_NAME || "").trim();
+    const escapeSheetName = (name) => `'${String(name).replace(/'/g, "''")}'`;
+    let effectiveSheetName = configuredSheetName;
+    let safeRangeSheet = escapeSheetName(effectiveSheetName);
+
+    let colAValues = [];
+    try {
+      const colA = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: `${safeRangeSheet}!A:A`,
+        majorDimension: "ROWS",
+      });
+      colAValues = colA.data.values || [];
+    } catch (e) {
+      // Fallback: if range parsing fails, use the first available sheet
+      const meta = await sheets.spreadsheets.get({ spreadsheetId });
+      const firstSheet = meta.data.sheets?.[0]?.properties?.title;
+      if (!firstSheet) {
+        throw new Error("No sheets found in spreadsheet");
+      }
+      effectiveSheetName = firstSheet;
+      safeRangeSheet = escapeSheetName(effectiveSheetName);
+      const colAFallback = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: `${safeRangeSheet}!A:A`,
+        majorDimension: "ROWS",
+      });
+      colAValues = colAFallback.data.values || [];
+    }
     const headerLooksLikeSerial =
       colAValues[0] &&
       colAValues[0][0] &&
@@ -108,7 +130,7 @@ export default async function handler(req, res) {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `${sheetName}!A:O`, // 15 columns
+      range: `${safeRangeSheet}!A:O`, // 15 columns
       valueInputOption: "USER_ENTERED",
       requestBody: { values: [row] },
     });
@@ -170,7 +192,7 @@ export default async function handler(req, res) {
       emailError = e?.message || String(e);
     }
 
-    res.status(200).json({ success: true, message: "Request saved!", requestId, serialNo, emailSent, emailError });
+    res.status(200).json({ success: true, message: "Request saved!", requestId, serialNo, sheet: effectiveSheetName, emailSent, emailError });
   } catch (err) {
     console.error("/api/request error:", err);
     const message = err?.message || String(err);
