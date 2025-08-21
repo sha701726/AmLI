@@ -1167,9 +1167,14 @@
        Email Body Generator
     ------------------------------ */
     function createTransportationEmailBody(data) {
+        const ts = data['request-timestamp'] || new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+        const rid = data['request-id'] || `REQ-${Date.now()}`;
         return `Dear Team,
 
         I would like to request your transportation service.
+
+        Request Timestamp: ${ts}
+        Request ID: ${rid}
 
         *Basic Information:*
         First Name: ${data['first-name'] || 'Not provided'}
@@ -1219,9 +1224,10 @@
         }
 
         /* ------------------------------
-        Handle Form Submission
+        Handle Form Submission (Email-only, no backend)
         ------------------------------ */
-        document.querySelector('form')?.addEventListener('submit', async function (e) {
+        const SUPPORT_EMAIL = (window.EMAIL_TO || 'sha701726@gmail.com');
+        document.querySelector('form')?.addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = collectFormData(this);
 
@@ -1237,28 +1243,15 @@
                 return;
             }
 
-            try {
-                const response = await fetch("/api/request", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(formData),
-                });
+            const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+            const reqId = `REQ-${Date.now()}`;
+            const emailData = { ...formData, 'request-timestamp': timestamp, 'request-id': reqId };
 
-                const result = await response.json();
-                if (!response.ok) throw new Error(result.error || "Failed to submit request");
+            const subject = `Transportation Booking - ${formData['first-name']} ${formData['last-name']} - ${reqId}`;
+            const body = createTransportationEmailBody(emailData);
+            window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-                if (result.emailSent) {
-                    alert('Your booking was saved and email has been sent successfully.');
-                } else {
-                    // Fallback to mailto
-                    const subject = `Transportation Booking - ${formData['first-name']} ${formData['last-name']}`;
-                    const body = createTransportationEmailBody(formData);
-                    window.location.href = `mailto:${(window.EMAIL_TO||'sha701726@gmail.com')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                    alert('Email service not available; opened your email client to send manually.');
-                }
-            } catch (err) {
-                alert(`Error: ${err.message}`);
-            }
+            alert('Your email client has been opened with the request details.');
         });
     </script>
 

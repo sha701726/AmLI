@@ -37,6 +37,9 @@ export default async function handler(req, res) {
       ["https://www.googleapis.com/auth/spreadsheets"]
     );
 
+    // Explicitly authorize to fail fast if key/permissions are wrong
+    await auth.authorize();
+
     const sheets = google.sheets({ version: "v4", auth });
 
     // Safely parse body (supports raw JSON string or parsed object)
@@ -169,7 +172,8 @@ export default async function handler(req, res) {
 
     res.status(200).json({ success: true, message: "Request saved!", requestId, serialNo, emailSent, emailError });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to save request" });
+    console.error("/api/request error:", err);
+    const message = err?.message || String(err);
+    res.status(500).json({ error: `Failed to save request: ${message}` });
   }
 }
