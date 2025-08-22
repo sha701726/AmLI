@@ -1,6 +1,7 @@
-// document.addEventListener('contextmenu', function (e) {
-//     e.preventDefault();
-// });
+document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+    alert('Right-click disabled');
+});
 
 // Viewport-based reveal animations for Services section
 (function () {
