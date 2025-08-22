@@ -106,6 +106,52 @@
 
         body {
             overflow-x: hidden;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Sticky background styles */
+        .sticky-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: black;
+            opacity: 0.7;
+            /* Adjust as needed */
+            z-index: -1;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+
+        .sticky-bg.released {
+            transform: translateY(100vh);
+        }
+
+        /* Ensure content sections have proper z-index */
+        .hero-section {
+            z-index: 1;
+        }
+
+        .hero-section~section {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Mobile responsive adjustments for sticky background */
+        @media (max-width: 768px) {
+            .sticky-bg {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+            }
         }
 
         /* Reveal on scroll (viewport-based) */
@@ -153,13 +199,7 @@
             }
         }
 
-
-
-        .request-service {
-            background-image: url("images/Back.jpg");
-            background-size: cover;
-            background-position: center;
-        }
+        /* absolute inset-0 z-10 bg-black bg-opacity-60 */
     </style>
 </head>
 
@@ -184,9 +224,6 @@
                     <a href="#services"
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">SERVICES</a>
                     <a href="#faq" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">FAQ</a>
-                    <a href="#request-form"
-                        class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">REQUEST
-                        SERVICES</a>
                 </div>
                 <div class="md:hidden">
                     <button id="mobile-menu-btn"
@@ -207,23 +244,15 @@
                     class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICES</a>
                 <a href="#faq"
                     class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">FAQ</a>
-                <a href="#request-form"
-                    class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">REQUEST
-                    SERVICES</a>
             </div>
         </div>
     </nav>
 
     <!-- hero-section -->
-    <section id="home" class="hero-section min-h-screen flex items-center justify-center px-4 pt-16 
-    bg-black md:bg-[url('images/image.jpg')] md:bg-cover md:bg-center md:bg-no-repeat">
-
-        <!-- Blurred background image (only on md and above) -->
-        <div class="hidden md:block absolute inset-0 z-0 bg-center bg-cover bg-no-repeat"
-            style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/image.jpg'); filter: blur(2px); transform: scale(1.1); background-blend-mode: darken;">
-        </div>
+    <section id="home"
+        class="hero-section min-h-screen flex items-center justify-center px-4 pt-16 relative overflow-hidden">
         <!-- Content -->
-        <div class="relative z-10 max-w-4xl mx-auto text-center text-white">
+        <div class="relative z-20 max-w-4xl mx-auto text-center text-white">
             <div class="badge-container">
                 <img src="images/3D.png" alt="AmLI Badge" class="rotating-badge" height="600" width="600"
                     style="width: 350px;">
@@ -240,21 +269,21 @@
 
 
     <!-- About Section -->
-    <section id="about" class="py-20 bg-amli-white">
+    <section id="about" class="py-20">
         <div class="max-w-6xl mx-auto px-0">
             <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">Get To Know AmLI</h2>
-                <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Get To Know AmLI</h2>
+                <div class="w-24 h-1 bg-amli-white mx-auto mb-8"></div>
             </div>
             <div class="grid md:grid-cols-2 gap-12 items-center" style="margin-left: 2rem; margin-right: 2rem;">
                 <div>
-                    <h3 class="text-2xl font-bold text-amli-dark mb-4">Our Core Commitment</h3>
-                    <p class="text-lg text-gray-600 mb-6">
+                    <h3 class="text-2xl font-bold text-white mb-4">Our Core Commitment</h3>
+                    <p style="color: white;">
                         AmLI (Adaptive Monitoring Layered Intelligence) is India’s premier next-generation ecosystem
                         seamlessly integrating strategic protection, legal assurance, and instantaneous intervention
                         through adaptive infrastructure and cutting-edge technologies.
                     </p>
-                    <p class="text-lg text-gray-600 mb-6">
+                    <p class="text-lg text-white mb-6">
                         AmLI is engineered not merely to safeguard, but to empower. Conceived from a singular,
                         transformative vision, it reimagines security with structure, intent, and uncompromising
                         precision. This unified philosophy of layered strength, area coverage, and purpose is what we
@@ -330,12 +359,12 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-20 bg-gray-50">
+    <section id="services" class="py-20">
         <div class="max-w-6xl mx-auto px-0">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-black mb-6">Our Framework</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Our Framework</h2>
                 <div class="w-24 h-1 bg-gray-400 mx-auto mb-8"></div>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p class="text-lg text-white max-w-2xl mx-auto">
                     <i>Protection, precision, and professionalism — seven pillars of expertise.</i>
                 </p>
             </div>
@@ -349,8 +378,7 @@
                         <p class="text-gray-600 text-sm">Professional guards for events, buildings, and institutions.
                         </p>
                         <!-- href="private-security-services.html" -->
-                        <i><a href="404.html"
-                                class="text-green-600 font-medium hover:underline">Know More</a></i>
+                        <i><a href="404.html" class="text-green-600 font-medium hover:underline">Know More</a></i>
                     </div>
                     <img src="images/Private Security Service.png" alt="Security" class="h-24 w-36 ml-1">
                 </div>
@@ -413,8 +441,7 @@
                         <h3 class="text-xl font-bold text-black mb-2">Legal Support</h3>
                         <p class="text-gray-600 text-sm">Incident reporting & legal documentation services.</p>
                         <!-- href="legal-support-reporting.html" -->
-                        <i><a href="404.html"
-                                class="text-green-600 font-medium hover:underline">Know More</a></i>
+                        <i><a href="404.html" class="text-green-600 font-medium hover:underline">Know More</a></i>
                     </div>
                     <img src="images/Leagle Support.png" alt="Legal" class="h-24 w-24 ml-1">
                 </div>
@@ -424,13 +451,12 @@
     </section>
 
     <!-- How It Works Section -->
-    <section id="how-it-works"
-        class="py-20 bg-amli-white how-it-works-bg min-h-screen flex items-center justify-center px-4 pt-16 ">
+    <section id="how-it-works" class="py-20 how-it-works-bg min-h-screen flex items-center justify-center px-4 pt-16 ">
         <div class="max-w-6xl mx-auto px-0">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">How It Works</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">How It Works</h2>
                 <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
-                <p class="text-lg max-w-2xl mx-auto" style="color: black;">
+                <p class="text-lg text-white max-w-2xl mx-auto">
                     <i>Getting help from AmLI’s expert security team is simple and reliable.</i>
                     <br><i>Here’s how it works :</i>
                 </p>
@@ -480,12 +506,12 @@
     </section>
 
     <!-- Frequently Asked Questions -->
-    <section id="faq" class="py-20 bg-white">
+    <section id="faq" class="py-20">
         <div class="max-w-4xl mx-auto px-0 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">Frequently Asked Questions</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Frequently Asked Questions</h2>
                 <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p class="text-lg text-white max-w-2xl mx-auto">
                     <i>Get answers to common questions about AmLI's security services and operations.</i>
                 </p>
             </div>
@@ -560,13 +586,13 @@
 
 
     <!-- Request/Offer Form -->
-    <section id="request-form" class="py-20 bg-gray-50 request-service">
+    <!-- <section id="request-form" class="py-20 request-service">
         <div class="max-w-4xl mx-auto px-0 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-amli-dark mb-6">Request Security Services</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Request Security Services</h2>
                 <div class="w-24 h-1 bg-amli-gray mx-auto mb-8"></div>
                 <i>
-                    <p class="text-lg text-gray-600">
+                    <p class="text-lg text-white">
                         Fill out the form below and we'll provide you with the professional security services you need.
                     </p>
                 </i>
@@ -636,7 +662,6 @@
                         </select>
                     </div>
 
-                    <!-- Dynamic Fields Container -->
                     <div id="dynamic-fields"></div>
 
                     <div id="personnel-field">
@@ -686,7 +711,7 @@
                 </form>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Footer -->
     <footer class="bg-black text-gray-400 py-12 w-full">
@@ -771,529 +796,552 @@
             element.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Helper function to collect all form data including dynamic fields
-        function collectAllFormData() {
-            const form = document.getElementById('ride-form');
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
+        //         // Helper function to collect all form data including dynamic fields
+        //         function collectAllFormData() {
+        //             const form = document.getElementById('ride-form');
+        //             const formData = new FormData(form);
+        //             const data = Object.fromEntries(formData);
 
-            // Get all form elements including dynamically generated ones
-            const allFormElements = form.querySelectorAll('input, select, textarea');
-            const allData = {};
+        //             // Get all form elements including dynamically generated ones
+        //             const allFormElements = form.querySelectorAll('input, select, textarea');
+        //             const allData = {};
 
-            allFormElements.forEach(element => {
-                if (element.name && element.value) {
-                    allData[element.name] = element.value;
-                }
-            });
+        //             allFormElements.forEach(element => {
+        //                 if (element.name && element.value) {
+        //                     allData[element.name] = element.value;
+        //                 }
+        //             });
 
-            return allData;
-        }
+        //             return allData;
+        //         }
 
-        // Helper function to create detailed email body
-        function createDetailedEmailBody(data) {
-            let body = `Dear AmLI Team,
+        //         // Helper function to create detailed email body
+        //         function createDetailedEmailBody(data) {
+        //             let body = `Dear AmLI Team,
 
-            I would like to request your professional security services.
+        //             I would like to request your professional security services.
 
-            *Basic Information:*
-            Name: ${data.name || 'Not provided'}
-            Phone: ${data.phone || 'Not provided'}
-            Service Location: ${data.location || 'Not provided'}
-            Start Date: ${data['start-date'] || 'Not provided'}
-            Service Duration: ${data.duration || 'Not provided'}
-            Service Type: ${data['service-type'] || 'Not provided'}
-            Personnel Required: ${data['personnel-count'] || 'Not specified'}`;
+        //             *Basic Information:*
+        //             Name: ${data.name || 'Not provided'}
+        //             Phone: ${data.phone || 'Not provided'}
+        //             Service Location: ${data.location || 'Not provided'}
+        //             Start Date: ${data['start-date'] || 'Not provided'}
+        //             Service Duration: ${data.duration || 'Not provided'}
+        //             Service Type: ${data['service-type'] || 'Not provided'}
+        //             Personnel Required: ${data['personnel-count'] || 'Not specified'}`;
 
-            // Add service-specific fields based on service type
-            const serviceType = data['service-type'];
+        //             // Add service-specific fields based on service type
+        //             const serviceType = data['service-type'];
 
-            if (serviceType === 'vip-protection') {
-                body += `
+        //             if (serviceType === 'vip-protection') {
+        //                 body += `
 
-            *VIP Protection Details:*
-            VIP Level: ${data['vip-level'] || 'Not specified'}
-            Threat Assessment: ${data['threat-level'] || 'Not specified'}
-            Special Requirements: ${data['special-requirements'] || 'None'}`;
-            } else if (serviceType === 'ride-service') {
-                body += `
+        //             *VIP Protection Details:*
+        //             VIP Level: ${data['vip-level'] || 'Not specified'}
+        //             Threat Assessment: ${data['threat-level'] || 'Not specified'}
+        //             Special Requirements: ${data['special-requirements'] || 'None'}`;
+        //             } else if (serviceType === 'ride-service') {
+        //                 body += `
 
-            *Transportation Details:*
-            Pickup Location: ${data['pickup-location'] || 'Not specified'}
-            Drop Location: ${data['drop-location'] || 'Not specified'}
-            Ride Type: ${data['ride-type'] || 'Not specified'}
-            Number of Passengers: ${data['passengers'] || 'Not specified'}`;
-            } else if (serviceType === 'emergency-response') {
-                body += `
+        //             *Transportation Details:*
+        //             Pickup Location: ${data['pickup-location'] || 'Not specified'}
+        //             Drop Location: ${data['drop-location'] || 'Not specified'}
+        //             Ride Type: ${data['ride-type'] || 'Not specified'}
+        //             Number of Passengers: ${data['passengers'] || 'Not specified'}`;
+        //             } else if (serviceType === 'emergency-response') {
+        //                 body += `
 
-            *Emergency Response Details:*
-            Emergency Type: ${data['emergency-type'] || 'Not specified'}
-            Urgency Level: ${data['urgency'] || 'Not specified'}`;
-            } else if (serviceType === 'smart-monitoring') {
-                body += `
+        //             *Emergency Response Details:*
+        //             Emergency Type: ${data['emergency-type'] || 'Not specified'}
+        //             Urgency Level: ${data['urgency'] || 'Not specified'}`;
+        //             } else if (serviceType === 'smart-monitoring') {
+        //                 body += `
 
-            *Smart Monitoring Details:*
-            Monitoring Type: ${data['monitoring-type'] || 'Not specified'}
-            Coverage Area: ${data['coverage-area'] || 'Not specified'}`;
-            } else if (serviceType === 'private-security') {
-                body += `
+        //             *Smart Monitoring Details:*
+        //             Monitoring Type: ${data['monitoring-type'] || 'Not specified'}
+        //             Coverage Area: ${data['coverage-area'] || 'Not specified'}`;
+        //             } else if (serviceType === 'private-security') {
+        //                 body += `
 
-            *Private Security Details:*
-            Security Type: ${data['security-type'] || 'Not specified'}
-            Security Shifts: ${data['security-shifts'] || 'Not specified'}`;
-            } else if (serviceType === 'legal-support') {
-                body += `
+        //             *Private Security Details:*
+        //             Security Type: ${data['security-type'] || 'Not specified'}
+        //             Security Shifts: ${data['security-shifts'] || 'Not specified'}`;
+        //             } else if (serviceType === 'legal-support') {
+        //                 body += `
 
-            *Legal Support Details:*
-            Legal Service Type: ${data['legal-service-type'] || 'Not specified'}
-            Urgency Level: ${data['urgency-level'] || 'Not specified'}`;
-            }
+        //             *Legal Support Details:*
+        //             Legal Service Type: ${data['legal-service-type'] || 'Not specified'}
+        //             Urgency Level: ${data['urgency-level'] || 'Not specified'}`;
+        //             }
 
-            body += `
+        //             body += `
 
-            *Additional Information:*
-            ${data['additional-info'] || 'None'}
+        //             *Additional Information:*
+        //             ${data['additional-info'] || 'None'}
 
-            Please contact me for further coordination and service deployment.
+        //             Please contact me for further coordination and service deployment.
 
-            Best regards,
-            ${data.name || 'Client'}`;
+        //             Best regards,
+        //             ${data.name || 'Client'}`;
 
-            return body.trim();
-        }
+        //             return body.trim();
+        //         }
 
-        // Form validation and submission
-        document.getElementById('ride-form').addEventListener('submit', function (e) {
-            e.preventDefault();
+        //         // Form validation and submission
+        //         document.getElementById('ride-form').addEventListener('submit', function (e) {
+        //             e.preventDefault();
 
-            // Collect all form data including dynamic fields
-            const allFormData = collectAllFormData();
+        //             // Collect all form data including dynamic fields
+        //             const allFormData = collectAllFormData();
 
-            // Validate required fields
-            const requiredFields = ['name', 'phone', 'location', 'start-date', 'duration', 'service-type'];
-            let isValid = true;
+        //             // Validate required fields
+        //             const requiredFields = ['name', 'phone', 'location', 'start-date', 'duration', 'service-type'];
+        //             let isValid = true;
 
-            requiredFields.forEach(field => {
-                const element = document.getElementById(field);
-                if (!allFormData[field] && element) {
-                    isValid = false;
-                    element.classList.add('border-red-500');
-                } else if (element) {
-                    element.classList.remove('border-red-500');
-                }
-            });
+        //             requiredFields.forEach(field => {
+        //                 const element = document.getElementById(field);
+        //                 if (!allFormData[field] && element) {
+        //                     isValid = false;
+        //                     element.classList.add('border-red-500');
+        //                 } else if (element) {
+        //                     element.classList.remove('border-red-500');
+        //                 }
+        //             });
 
-            if (!isValid) {
-                alert('Please fill in all required fields.');
-                return;
-            }
+        //             if (!isValid) {
+        //                 alert('Please fill in all required fields.');
+        //                 return;
+        //             }
 
-            // Create email content with all collected data
-            const subject = `AmLI Security Service Request - ${allFormData.name} - ${allFormData['service-type']}`;
-            const body = createDetailedEmailBody(allFormData);
+        //             // Create email content with all collected data
+        //             const subject = `AmLI Security Service Request - ${allFormData.name} - ${allFormData['service-type']}`;
+        //             const body = createDetailedEmailBody(allFormData);
 
-            if (!navigator.userAgent.includes("Chrome")) {
-                alert("We recommend using Google Chrome for best performance. Please open this site in Chrome.");
-            }
+        //             if (!navigator.userAgent.includes("Chrome")) {
+        //                 alert("We recommend using Google Chrome for best performance. Please open this site in Chrome.");
+        //             }
 
-            // Open email client
-            const mailto = `mailto:sha701726@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.location.href = mailto;
+        //             // Open email client
+        //             const mailto = `mailto:sha701726@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        //             window.location.href = mailto;
 
-            // Show success message
-            alert('Your request has been prepared! Please send the email to complete your submission.');
-        });
+        //             // Show success message
+        //             alert('Your request has been prepared! Please send the email to complete your submission.');
+        //         });
 
-        // Helper function to create detailed WhatsApp message
-        function createDetailedWhatsAppMessage(data) {
-            let message = `Hi AmLI! 
+        //         // Helper function to create detailed WhatsApp message
+        //         function createDetailedWhatsAppMessage(data) {
+        //             let message = `Hi AmLI! 
 
-I would like to request your security services.
+        // I would like to request your security services.
 
-*Service Request Details:*
-Name: ${data.name || 'Not provided'}
-Phone: ${data.phone || 'Not provided'}
-Service Location: ${data.location || 'Not provided'}
-Start Date: ${data['start-date'] || 'Not provided'}
-Duration: ${data.duration || 'Not provided'}
-Service Type: ${data['service-type'] || 'Not provided'}
-Personnel Required: ${data['personnel-count'] || 'To be discussed'}`;
+        // *Service Request Details:*
+        // Name: ${data.name || 'Not provided'}
+        // Phone: ${data.phone || 'Not provided'}
+        // Service Location: ${data.location || 'Not provided'}
+        // Start Date: ${data['start-date'] || 'Not provided'}
+        // Duration: ${data.duration || 'Not provided'}
+        // Service Type: ${data['service-type'] || 'Not provided'}
+        // Personnel Required: ${data['personnel-count'] || 'To be discussed'}`;
 
-            // Add service-specific fields based on service type
-            const serviceType = data['service-type'];
+        //             // Add service-specific fields based on service type
+        //             const serviceType = data['service-type'];
 
-            if (serviceType === 'vip-protection') {
-                message += `
+        //             if (serviceType === 'vip-protection') {
+        //                 message += `
 
-*VIP Protection Details:*
-VIP Level: ${data['vip-level'] || 'Not specified'}
-Threat Assessment: ${data['threat-level'] || 'Not specified'}
-Special Requirements: ${data['special-requirements'] || 'None'}`;
-            } else if (serviceType === 'ride-service') {
-                message += `
+        // *VIP Protection Details:*
+        // VIP Level: ${data['vip-level'] || 'Not specified'}
+        // Threat Assessment: ${data['threat-level'] || 'Not specified'}
+        // Special Requirements: ${data['special-requirements'] || 'None'}`;
+        //             } else if (serviceType === 'ride-service') {
+        //                 message += `
 
-*Transportation Details:*
-Pickup Location: ${data['pickup-location'] || 'Not specified'}
-Drop Location: ${data['drop-location'] || 'Not specified'}
-Ride Type: ${data['ride-type'] || 'Not specified'}
-Number of Passengers: ${data['passengers'] || 'Not specified'}`;
-            } else if (serviceType === 'emergency-response') {
-                message += `
+        // *Transportation Details:*
+        // Pickup Location: ${data['pickup-location'] || 'Not specified'}
+        // Drop Location: ${data['drop-location'] || 'Not specified'}
+        // Ride Type: ${data['ride-type'] || 'Not specified'}
+        // Number of Passengers: ${data['passengers'] || 'Not specified'}`;
+        //             } else if (serviceType === 'emergency-response') {
+        //                 message += `
 
-*Emergency Response Details:*
-Emergency Type: ${data['emergency-type'] || 'Not specified'}
-Urgency Level: ${data['urgency'] || 'Not specified'}`;
-            } else if (serviceType === 'smart-monitoring') {
-                message += `
+        // *Emergency Response Details:*
+        // Emergency Type: ${data['emergency-type'] || 'Not specified'}
+        // Urgency Level: ${data['urgency'] || 'Not specified'}`;
+        //             } else if (serviceType === 'smart-monitoring') {
+        //                 message += `
 
-*Smart Monitoring Details:*
-Monitoring Type: ${data['monitoring-type'] || 'Not specified'}
-Coverage Area: ${data['coverage-area'] || 'Not specified'}`;
-            } else if (serviceType === 'private-security') {
-                message += `
+        // *Smart Monitoring Details:*
+        // Monitoring Type: ${data['monitoring-type'] || 'Not specified'}
+        // Coverage Area: ${data['coverage-area'] || 'Not specified'}`;
+        //             } else if (serviceType === 'private-security') {
+        //                 message += `
 
-*Private Security Details:*
-Security Type: ${data['security-type'] || 'Not specified'}
-Security Shifts: ${data['security-shifts'] || 'Not specified'}`;
-            } else if (serviceType === 'legal-support') {
-                message += `
+        // *Private Security Details:*
+        // Security Type: ${data['security-type'] || 'Not specified'}
+        // Security Shifts: ${data['security-shifts'] || 'Not specified'}`;
+        //             } else if (serviceType === 'legal-support') {
+        //                 message += `
 
-*Legal Support Details:*
-Legal Service Type: ${data['legal-service-type'] || 'Not specified'}
-Urgency Level: ${data['urgency-level'] || 'Not specified'}`;
-            }
+        // *Legal Support Details:*
+        // Legal Service Type: ${data['legal-service-type'] || 'Not specified'}
+        // Urgency Level: ${data['urgency-level'] || 'Not specified'}`;
+        //             }
 
-            message += `
+        //             message += `
 
-${data['additional-info'] ? `*Additional Requirements:* ${data['additional-info']}` : ''}
+        // ${data['additional-info'] ? `*Additional Requirements:* ${data['additional-info']}` : ''}
 
-Please help me with professional security services. Thank you!`;
+        // Please help me with professional security services. Thank you!`;
 
-            return message;
-        }
+        //             return message;
+        //         }
 
-        // WhatsApp submission function
-        function submitViaWhatsApp() {
-            // Collect all form data including dynamic fields
-            const allFormData = collectAllFormData();
+        //         // WhatsApp submission function
+        //         function submitViaWhatsApp() {
+        //             // Collect all form data including dynamic fields
+        //             const allFormData = collectAllFormData();
 
-            // Validate required fields
-            const requiredFields = ['name', 'phone', 'location', 'start-date', 'duration', 'service-type'];
-            let isValid = true;
+        //             // Validate required fields
+        //             const requiredFields = ['name', 'phone', 'location', 'start-date', 'duration', 'service-type'];
+        //             let isValid = true;
 
-            requiredFields.forEach(field => {
-                const element = document.getElementById(field);
-                if (!allFormData[field] && element) {
-                    isValid = false;
-                    element.classList.add('border-red-500');
-                } else if (element) {
-                    element.classList.remove('border-red-500');
-                }
-            });
+        //             requiredFields.forEach(field => {
+        //                 const element = document.getElementById(field);
+        //                 if (!allFormData[field] && element) {
+        //                     isValid = false;
+        //                     element.classList.add('border-red-500');
+        //                 } else if (element) {
+        //                     element.classList.remove('border-red-500');
+        //                 }
+        //             });
 
-            if (!isValid) {
-                alert('Please fill in all required fields.');
-                return;
-            }
+        //             if (!isValid) {
+        //                 alert('Please fill in all required fields.');
+        //                 return;
+        //             }
 
-            // Create WhatsApp message with all collected data
-            const message = createDetailedWhatsAppMessage(allFormData);
+        //             // Create WhatsApp message with all collected data
+        //             const message = createDetailedWhatsAppMessage(allFormData);
 
-            const whatsappUrl = `https://wa.me/7017267400?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        }
+        //             const whatsappUrl = `https://wa.me/7017267400?text=${encodeURIComponent(message)}`;
+        //             window.open(whatsappUrl, '_blank');
+        //         }
 
-        // Dynamic form fields based on service type
-        function updateFormFields() {
-            const serviceType = document.getElementById('service-type').value;
-            const dynamicFields = document.getElementById('dynamic-fields');
-            const personnelField = document.getElementById('personnel-field');
+        //         // Dynamic form fields based on service type
+        //         function updateFormFields() {
+        //             const serviceType = document.getElementById('service-type').value;
+        //             const dynamicFields = document.getElementById('dynamic-fields');
+        //             const personnelField = document.getElementById('personnel-field');
 
-            // Clear existing dynamic fields
-            dynamicFields.innerHTML = '';
+        //             // Clear existing dynamic fields
+        //             dynamicFields.innerHTML = '';
 
-            if (serviceType === 'vip-protection') {
-                dynamicFields.innerHTML = `
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="vip-level" class="block text-sm font-medium text-amli-dark mb-2">VIP Level</label>
-                            <select id="vip-level" name="vip-level" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select VIP level</option>
-                                <option value="executive">Executive Protection</option>
-                                <option value="celebrity">Celebrity Protection</option>
-                                <option value="political">Political Figure</option>
-                                <option value="business">Business Leader</option>
-                                <option value="family">Family Protection</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="threat-level" class="block text-sm font-medium text-amli-dark mb-2">Threat Assessment</label>
-                            <select id="threat-level" name="threat-level" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select threat level</option>
-                                <option value="low">Low Risk</option>
-                                <option value="medium">Medium Risk</option>
-                                <option value="high">High Risk</option>
-                                <option value="critical">Critical Risk</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="special-requirements" class="block text-sm font-medium text-amli-dark mb-2">Special Requirements</label>
-                        <textarea id="special-requirements" name="special-requirements" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent" placeholder="Armed/unarmed guards, vehicle escort, advance security, etc."></textarea>
-                    </div>
-                `;
-                personnelField.style.display = 'block';
-            }
-            else if (serviceType === 'ride-service') {
-                dynamicFields.innerHTML = `
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="pickup-location" class="block text-sm font-medium text-amli-dark mb-2">Pickup Location *</label>
-                            <input type="text" id="pickup-location" name="pickup-location" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent" placeholder="Enter pickup address">
-                        </div>
-                        <div>
-                            <label for="drop-location" class="block text-sm font-medium text-amli-dark mb-2">Drop Location *</label>
-                            <input type="text" id="drop-location" name="drop-location" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent" placeholder="Enter destination address">
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="ride-type" class="block text-sm font-medium text-amli-dark mb-2">Ride Type</label>
-                            <select id="ride-type" name="ride-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select ride type</option>
-                                <option value="daily-office">Daily Office Commute</option>
-                                <option value="intercity">Intercity Travel</option>
-                                <option value="rural-urban">Rural-Urban Trip</option>
-                                <option value="emergency">Emergency Transport</option>
-                                <option value="group">Group Travel</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="passengers" class="block text-sm font-medium text-amli-dark mb-2">Number of Passengers</label>
-                            <select id="passengers" name="passengers" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select passengers</option>
-                                <option value="1">1 passenger</option>
-                                <option value="2">2 passengers</option>
-                                <option value="3">3 passengers</option>
-                                <option value="4">4 passengers</option>
-                                <option value="more">More than 4</option>
-                            </select>
-                        </div>
-                    </div>
-                `;
-                personnelField.style.display = 'none';
-            }
-            else if (serviceType === 'emergency-response') {
-                dynamicFields.innerHTML = `
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="emergency-type" class="block text-sm font-medium text-amli-dark mb-2">Emergency Type</label>
-                            <select id="emergency-type" name="emergency-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select emergency type</option>
-                                <option value="medical">Medical Emergency</option>
-                                <option value="security">Personal Security Breach</option>
-                                <option value="disaster">Natural Disaster</option>
-                                <option value="fire">Fire Emergency</option>
-                                <option value="other">Other Emergency</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="urgency" class="block text-sm font-medium text-amli-dark mb-2">Urgency Level</label>
-                            <select id="urgency" name="urgency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select urgency</option>
-                                <option value="immediate">Immediate (0-15 min)</option>
-                                <option value="urgent">Urgent (15-60 min)</option>
-                                <option value="high">High (1-4 hours)</option>
-                                <option value="normal">Normal (4-24 hours)</option>
-                            </select>
-                        </div>
-                    </div>
-                `;
-                personnelField.style.display = 'block';
-            }
-            else if (serviceType === 'smart-monitoring') {
-                dynamicFields.innerHTML = `
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="monitoring-type" class="block text-sm font-medium text-amli-dark mb-2">Monitoring Type</label>
-                            <select id="monitoring-type" name="monitoring-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select monitoring type</option>
-                                <option value="cctv-setup">CCTV System Setup</option>
-                                <option value="remote-monitoring">Remote Monitoring</option>
-                                <option value="access-control">Access Control System</option>
-                                <option value="alarm-system">Alarm System</option>
-                                <option value="integrated">Integrated Security System</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="coverage-area" class="block text-sm font-medium text-amli-dark mb-2">Coverage Area (sq m)</label>
-                            <input type="text" id="coverage-area" name="coverage-area" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent" placeholder="e.g., 5000 sq m">
-                        </div>
-                    </div>
-                `;
-                personnelField.style.display = 'block';
-            }
-            else if (serviceType === 'private-security') {
-                dynamicFields.innerHTML = `
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="security-type" class="block text-sm font-medium text-amli-dark mb-2">Security Type</label>
-                            <select id="security-type" name="security-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select security type</option>
-                                <option value="building-security">Building Security</option>
-                                <option value="event-security">Event Security</option>
-                                <option value="institutional-security">Institutional Security</option>
-                                <option value="residential-security">Residential Security</option>
-                                <option value="commercial-security">Commercial Security</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="security-shifts" class="block text-sm font-medium text-amli-dark mb-2">Security Shifts</label>
-                            <select id="security-shifts" name="security-shifts" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select shift type</option>
-                                <option value="day-shift">Day Shift (6 AM - 6 PM)</option>
-                                <option value="night-shift">Night Shift (6 PM - 6 AM)</option>
-                                <option value="24-7">24/7 Coverage</option>
-                                <option value="event-based">Event-based</option>
-                            </select>
-                        </div>
-                    </div>
-                `;
-                personnelField.style.display = 'block';
-            }
-            else if (serviceType === 'legal-support') {
-                dynamicFields.innerHTML = `
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="legal-service-type" class="block text-sm font-medium text-amli-dark mb-2">Legal Service Type</label>
-                            <select id="legal-service-type" name="legal-service-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select legal service type</option>
-                                <option value="incident-reporting">Incident Reporting</option>
-                                <option value="rights-awareness">Rights Awareness</option>
-                                <option value="documentation-support">Documentation Support</option>
-                                <option value="case-support">Case Support</option>
-                                <option value="legal-consultation">Legal Consultation</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="urgency-level" class="block text-sm font-medium text-amli-dark mb-2">Urgency Level</label>
-                            <select id="urgency-level" name="urgency-level" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
-                                <option value="">Select urgency</option>
-                                <option value="immediate">Immediate</option>
-                                <option value="urgent">Urgent (within 24 hours)</option>
-                                <option value="normal">Normal (within 3-5 days)</option>
-                                <option value="consultation">Consultation only</option>
-                            </select>
-                        </div>
-                    </div>
-                `;
-                personnelField.style.display = 'block';
-            }
-            else {
-                personnelField.style.display = 'block';
-            }
-        }
+        //             if (serviceType === 'vip-protection') {
+        //                 dynamicFields.innerHTML = `
+        //                     <div class="grid md:grid-cols-2 gap-6">
+        //                         <div>
+        //                             <label for="vip-level" class="block text-sm font-medium text-amli-dark mb-2">VIP Level</label>
+        //                             <select id="vip-level" name="vip-level" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select VIP level</option>
+        //                                 <option value="executive">Executive Protection</option>
+        //                                 <option value="celebrity">Celebrity Protection</option>
+        //                                 <option value="political">Political Figure</option>
+        //                                 <option value="business">Business Leader</option>
+        //                                 <option value="family">Family Protection</option>
+        //                             </select>
+        //                         </div>
+        //                         <div>
+        //                             <label for="threat-level" class="block text-sm font-medium text-amli-dark mb-2">Threat Assessment</label>
+        //                             <select id="threat-level" name="threat-level" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select threat level</option>
+        //                                 <option value="low">Low Risk</option>
+        //                                 <option value="medium">Medium Risk</option>
+        //                                 <option value="high">High Risk</option>
+        //                                 <option value="critical">Critical Risk</option>
+        //                             </select>
+        //                         </div>
+        //                     </div>
+        //                     <div>
+        //                         <label for="special-requirements" class="block text-sm font-medium text-amli-dark mb-2">Special Requirements</label>
+        //                         <textarea id="special-requirements" name="special-requirements" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent" placeholder="Armed/unarmed guards, vehicle escort, advance security, etc."></textarea>
+        //                     </div>
+        //                 `;
+        //                 personnelField.style.display = 'block';
+        //             }
+        //             else if (serviceType === 'ride-service') {
+        //                 dynamicFields.innerHTML = `
+        //                     <div class="grid md:grid-cols-2 gap-6">
+        //                         <div>
+        //                             <label for="pickup-location" class="block text-sm font-medium text-amli-dark mb-2">Pickup Location *</label>
+        //                             <input type="text" id="pickup-location" name="pickup-location" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent" placeholder="Enter pickup address">
+        //                         </div>
+        //                         <div>
+        //                             <label for="drop-location" class="block text-sm font-medium text-amli-dark mb-2">Drop Location *</label>
+        //                             <input type="text" id="drop-location" name="drop-location" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent" placeholder="Enter destination address">
+        //                         </div>
+        //                     </div>
+        //                     <div class="grid md:grid-cols-2 gap-6">
+        //                         <div>
+        //                             <label for="ride-type" class="block text-sm font-medium text-amli-dark mb-2">Ride Type</label>
+        //                             <select id="ride-type" name="ride-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select ride type</option>
+        //                                 <option value="daily-office">Daily Office Commute</option>
+        //                                 <option value="intercity">Intercity Travel</option>
+        //                                 <option value="rural-urban">Rural-Urban Trip</option>
+        //                                 <option value="emergency">Emergency Transport</option>
+        //                                 <option value="group">Group Travel</option>
+        //                             </select>
+        //                         </div>
+        //                         <div>
+        //                             <label for="passengers" class="block text-sm font-medium text-amli-dark mb-2">Number of Passengers</label>
+        //                             <select id="passengers" name="passengers" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select passengers</option>
+        //                                 <option value="1">1 passenger</option>
+        //                                 <option value="2">2 passengers</option>
+        //                                 <option value="3">3 passengers</option>
+        //                                 <option value="4">4 passengers</option>
+        //                                 <option value="more">More than 4</option>
+        //                             </select>
+        //                         </div>
+        //                     </div>
+        //                 `;
+        //                 personnelField.style.display = 'none';
+        //             }
+        //             else if (serviceType === 'emergency-response') {
+        //                 dynamicFields.innerHTML = `
+        //                     <div class="grid md:grid-cols-2 gap-6">
+        //                         <div>
+        //                             <label for="emergency-type" class="block text-sm font-medium text-amli-dark mb-2">Emergency Type</label>
+        //                             <select id="emergency-type" name="emergency-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select emergency type</option>
+        //                                 <option value="medical">Medical Emergency</option>
+        //                                 <option value="security">Personal Security Breach</option>
+        //                                 <option value="disaster">Natural Disaster</option>
+        //                                 <option value="fire">Fire Emergency</option>
+        //                                 <option value="other">Other Emergency</option>
+        //                             </select>
+        //                         </div>
+        //                         <div>
+        //                             <label for="urgency" class="block text-sm font-medium text-amli-dark mb-2">Urgency Level</label>
+        //                             <select id="urgency" name="urgency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select urgency</option>
+        //                                 <option value="immediate">Immediate (0-15 min)</option>
+        //                                 <option value="urgent">Urgent (15-60 min)</option>
+        //                                 <option value="high">High (1-4 hours)</option>
+        //                                 <option value="normal">Normal (4-24 hours)</option>
+        //                             </select>
+        //                         </div>
+        //                     </div>
+        //                 `;
+        //                 personnelField.style.display = 'block';
+        //             }
+        //             else if (serviceType === 'smart-monitoring') {
+        //                 dynamicFields.innerHTML = `
+        //                     <div class="grid md:grid-cols-2 gap-6">
+        //                         <div>
+        //                             <label for="monitoring-type" class="block text-sm font-medium text-amli-dark mb-2">Monitoring Type</label>
+        //                             <select id="monitoring-type" name="monitoring-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select monitoring type</option>
+        //                                 <option value="cctv-setup">CCTV System Setup</option>
+        //                                 <option value="remote-monitoring">Remote Monitoring</option>
+        //                                 <option value="access-control">Access Control System</option>
+        //                                 <option value="alarm-system">Alarm System</option>
+        //                                 <option value="integrated">Integrated Security System</option>
+        //                             </select>
+        //                         </div>
+        //                         <div>
+        //                             <label for="coverage-area" class="block text-sm font-medium text-amli-dark mb-2">Coverage Area (sq m)</label>
+        //                             <input type="text" id="coverage-area" name="coverage-area" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent" placeholder="e.g., 5000 sq m">
+        //                         </div>
+        //                     </div>
+        //                 `;
+        //                 personnelField.style.display = 'block';
+        //             }
+        //             else if (serviceType === 'private-security') {
+        //                 dynamicFields.innerHTML = `
+        //                     <div class="grid md:grid-cols-2 gap-6">
+        //                         <div>
+        //                             <label for="security-type" class="block text-sm font-medium text-amli-dark mb-2">Security Type</label>
+        //                             <select id="security-type" name="security-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select security type</option>
+        //                                 <option value="building-security">Building Security</option>
+        //                                 <option value="event-security">Event Security</option>
+        //                                 <option value="institutional-security">Institutional Security</option>
+        //                                 <option value="residential-security">Residential Security</option>
+        //                                 <option value="commercial-security">Commercial Security</option>
+        //                             </select>
+        //                         </div>
+        //                         <div>
+        //                             <label for="security-shifts" class="block text-sm font-medium text-amli-dark mb-2">Security Shifts</label>
+        //                             <select id="security-shifts" name="security-shifts" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select shift type</option>
+        //                                 <option value="day-shift">Day Shift (6 AM - 6 PM)</option>
+        //                                 <option value="night-shift">Night Shift (6 PM - 6 AM)</option>
+        //                                 <option value="24-7">24/7 Coverage</option>
+        //                                 <option value="event-based">Event-based</option>
+        //                             </select>
+        //                         </div>
+        //                     </div>
+        //                 `;
+        //                 personnelField.style.display = 'block';
+        //             }
+        //             else if (serviceType === 'legal-support') {
+        //                 dynamicFields.innerHTML = `
+        //                     <div class="grid md:grid-cols-2 gap-6">
+        //                         <div>
+        //                             <label for="legal-service-type" class="block text-sm font-medium text-amli-dark mb-2">Legal Service Type</label>
+        //                             <select id="legal-service-type" name="legal-service-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select legal service type</option>
+        //                                 <option value="incident-reporting">Incident Reporting</option>
+        //                                 <option value="rights-awareness">Rights Awareness</option>
+        //                                 <option value="documentation-support">Documentation Support</option>
+        //                                 <option value="case-support">Case Support</option>
+        //                                 <option value="legal-consultation">Legal Consultation</option>
+        //                             </select>
+        //                         </div>
+        //                         <div>
+        //                             <label for="urgency-level" class="block text-sm font-medium text-amli-dark mb-2">Urgency Level</label>
+        //                             <select id="urgency-level" name="urgency-level" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amli-gray focus:border-transparent">
+        //                                 <option value="">Select urgency</option>
+        //                                 <option value="immediate">Immediate</option>
+        //                                 <option value="urgent">Urgent (within 24 hours)</option>
+        //                                 <option value="normal">Normal (within 3-5 days)</option>
+        //                                 <option value="consultation">Consultation only</option>
+        //                             </select>
+        //                         </div>
+        //                     </div>
+        //                 `;
+        //                 personnelField.style.display = 'block';
+        //             }
+        //             else {
+        //                 personnelField.style.display = 'block';
+        //             }
+        //         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            var today = new Date();
-            var yyyy = today.getFullYear();
-            var mm = String(today.getMonth() + 1).padStart(2, '0');
-            var dd = String(today.getDate()).padStart(2, '0');
-            var minDate = yyyy + '-' + mm + '-' + dd;
-            document.getElementById('start-date').setAttribute('min', minDate);
+        //         document.addEventListener("DOMContentLoaded", function () {
+        //             var today = new Date();
+        //             var yyyy = today.getFullYear();
+        //             var mm = String(today.getMonth() + 1).padStart(2, '0');
+        //             var dd = String(today.getDate()).padStart(2, '0');
+        //             var minDate = yyyy + '-' + mm + '-' + dd;
+        //             document.getElementById('start-date').setAttribute('min', minDate);
 
-            // Ensure duration field only shows predefined choices
-            const durationField = document.getElementById('duration');
-            if (durationField) {
-                // Clear any autofilled or cached values
-                durationField.value = '';
+        //             // Ensure duration field only shows predefined choices
+        //             const durationField = document.getElementById('duration');
+        //             if (durationField) {
+        //                 // Clear any autofilled or cached values
+        //                 durationField.value = '';
 
-                // Ensure only predefined options are present
-                const predefinedOptions = [
-                    { value: '', text: 'Select duration' },
-                    { value: 'daily', text: 'Daily (8-12 hours)' },
-                    { value: 'weekly', text: 'Weekly contract' },
-                    { value: 'monthly', text: 'Monthly contract' },
-                    { value: 'event', text: 'Single event' },
-                    { value: 'emergency', text: 'Emergency (immediate)' }
-                ];
+        //                 // Ensure only predefined options are present
+        //                 const predefinedOptions = [
+        //                     { value: '', text: 'Select duration' },
+        //                     { value: 'daily', text: 'Daily (8-12 hours)' },
+        //                     { value: 'weekly', text: 'Weekly contract' },
+        //                     { value: 'monthly', text: 'Monthly contract' },
+        //                     { value: 'event', text: 'Single event' },
+        //                     { value: 'emergency', text: 'Emergency (immediate)' }
+        //                 ];
 
-                // Clear existing options and add only predefined ones
-                durationField.innerHTML = '';
-                predefinedOptions.forEach(option => {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = option.value;
-                    optionElement.textContent = option.text;
-                    durationField.appendChild(optionElement);
-                });
-            }
-        });
+        //                 // Clear existing options and add only predefined ones
+        //                 durationField.innerHTML = '';
+        //                 predefinedOptions.forEach(option => {
+        //                     const optionElement = document.createElement('option');
+        //                     optionElement.value = option.value;
+        //                     optionElement.textContent = option.text;
+        //                     durationField.appendChild(optionElement);
+        //                 });
+        //             }
+        //         });
 
-        // Close mobile menu when clicking on links
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', function () {
-                document.getElementById('mobile-menu').classList.add('hidden');
-            });
-        });
+        //         // Sticky Background Effect
+        //         document.addEventListener('DOMContentLoaded', function() {
+        //             const stickyBg = document.getElementById('sticky-bg');
+        //             const footer = document.querySelector('footer');
 
-        // Add smooth scrolling to all internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+        //             if (stickyBg && footer) {
+        //                 window.addEventListener('scroll', function() {
+        //                     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        //                     const footerTop = footer.offsetTop;
+        //                     const windowHeight = window.innerHeight;
 
-        // Add loading animation to form submission
-        document.getElementById('ride-form').addEventListener('submit', function () {
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
-            submitBtn.disabled = true;
+        //                     // Check if we've reached the footer
+        //                     if (scrollTop + windowHeight >= footerTop) {
+        //                         // Release the sticky background
+        //                         stickyBg.classList.add('released');
+        //                     } else {
+        //                         // Keep the sticky background in place
+        //                         stickyBg.classList.remove('released');
+        //                     }
+        //                 });
+        //             }
+        //         });
 
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 1000);
-        });
+        //         // Close mobile menu when clicking on links
+        //         document.querySelectorAll('#mobile-menu a').forEach(link => {
+        //             link.addEventListener('click', function () {
+        //                 document.getElementById('mobile-menu').classList.add('hidden');
+        //             });
+        //         });
 
-        // Auto-fill location on page load or event
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
+        //         // Add smooth scrolling to all internal links
+        //         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        //             anchor.addEventListener('click', function (e) {
+        //                 e.preventDefault();
+        //                 const targetId = this.getAttribute('href').substring(1);
+        //                 const targetElement = document.getElementById(targetId);
+        //                 if (targetElement) {
+        //                     targetElement.scrollIntoView({ behavior: 'smooth' });
+        //                 }
+        //             });
+        //         });
 
-                    console.log("Latitude:", lat);
-                    console.log("Longitude:", lon);
+        //         // Add loading animation to form submission
+        //         document.getElementById('ride-form').addEventListener('submit', function () {
+        //             const submitBtn = this.querySelector('button[type="submit"]');
+        //             const originalText = submitBtn.innerHTML;
+        //             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+        //             submitBtn.disabled = true;
 
-                    // Reverse geocoding using OpenStreetMap
-                    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            const locationName = data.display_name;
-                            console.log("Location Name:", locationName);
-                            document.getElementById("location").value = locationName;
-                        })
-                        .catch(error => {
-                            console.error("Error in reverse geocoding:", error);
-                        });
-                },
-                function (error) {
-                    if (error.code === error.PERMISSION_DENIED) {
-                        console.log("Location permission denied.");
-                    } else {
-                        console.log("Error getting location:", error.message);
-                    }
-                }
-            );
-        } else {
-            console.log("Geolocation is not supported by this browser.");
-        }
+        //             setTimeout(() => {
+        //                 submitBtn.innerHTML = originalText;
+        //                 submitBtn.disabled = false;
+        //             }, 1000);
+        //         });
+
+        //         // Auto-fill location on page load or event
+        //         if ("geolocation" in navigator) {
+        //             navigator.geolocation.getCurrentPosition(
+        //                 function (position) {
+        //                     const lat = position.coords.latitude;
+        //                     const lon = position.coords.longitude;
+
+        //                     console.log("Latitude:", lat);
+        //                     console.log("Longitude:", lon);
+
+        //                     // Reverse geocoding using OpenStreetMap
+        //                     fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
+        //                         .then(response => response.json())
+        //                         .then(data => {
+        //                             const locationName = data.display_name;
+        //                             console.log("Location Name:", locationName);
+        //                             document.getElementById("location").value = locationName;
+        //                         })
+        //                         .catch(error => {
+        //                             console.error("Error in reverse geocoding:", error);
+        //                         });
+        //                 },
+        //                 function (error) {
+        //                     if (error.code === error.PERMISSION_DENIED) {
+        //                         console.log("Location permission denied.");
+        //                     } else {
+        //                         console.log("Error getting location:", error.message);
+        //                     }
+        //                 }
+        //             );
+        //         } else {
+        //             console.log("Geolocation is not supported by this browser.");
+        //         }
 
         // FAQ Toggle Function
         function toggleFAQ(button) {
