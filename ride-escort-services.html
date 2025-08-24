@@ -238,7 +238,7 @@
 
         .rotating-badge {
             width: 200px;
-            height: auto;
+            height: 400px;
             animation: spin 20s linear infinite;
             transform-style: preserve-3d;
         }
@@ -419,6 +419,33 @@
             from, to { border-color: transparent; }
             50% { border-color: #000; }
         }
+
+        .blur-bg {
+        position: relative;
+        overflow: hidden;
+        height: 60vh;
+        width: 100%;
+        }
+
+        .blur-bg::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                    url('images/image.jpg');
+        background-size: cover;
+        background-position: center;
+        /* filter: blur(2px);   👈 blur intensity adjust karo */
+        /* transform: scale(1.1); 👈 edges blur crop na ho iske liye */
+        z-index: 0;
+        }
+
+        .blur-bg > * {
+        position: relative;
+        z-index: 1; /* content clear rahega */
+        }
+
     </style>
 </head>
 
@@ -461,7 +488,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="overview" class="py-20 bg-gradient-to-br from-black to-white text-white">
+    <section id="overview" class="py-20 bg-gradient-to-br from-black to-white text-white blur-bg">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="animate-fade-in-left">
@@ -848,7 +875,7 @@
     </section>
 
     <!-- Transportation Booking Section -->
-    <section id="transport" class="py-20 bg-gradient-to-br from-black to-white text-white">
+    <section id="transport" class="py-20 bg-gradient-to-br from-black to-white text-white" style="overflow-x: hidden; background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/Ride Scort 1.png'); background-size: cover; background-position: center center; height: 100vh; width: 100%;">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Book Transportation Services</h2>
