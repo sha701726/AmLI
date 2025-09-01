@@ -269,15 +269,7 @@
                     <a href="#services"
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">SERVICES</a>
                     <a href="#faq" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">FAQ</a>
-                    <div class="relative">
-                        <a href="javascript:void(0)" id="desktop-openings-btn"
-                        class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300 cursor-pointer">OPENINGS</a>
-                        <!-- Dropdown menu -->
-                        <div id="desktop-openings-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-1 w-40 z-50 left-0">
-                            <a href="404.html" class="block px-4 py-2 text-amli-gray-700 hover:bg-gray-100 transition-colors">Job</a>
-                            <a href="404.html" class="block px-4 py-2 text-amli-gray-700 hover:bg-gray-100 transition-colors">Internship</a>
-                        </div>
-                    </div>
+                    <a href="https://dotnet-n7t3.onrender.com/" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">AmLI ASSISTANT</a>
                 </div>
                 <div class="md:hidden">
                     <button id="mobile-menu-btn"
@@ -297,6 +289,7 @@
                 <a href="#services"
                     class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICES</a>
                 <a href="#faq" class="block px-3 py-3 font-bold text-white transition-colors duration-200">FAQ</a>
+                <a href="https://dotnet-n7t3.onrender.com/" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">AmLI ASSISTANT</a>
             </div>
         </div>
     </nav>
@@ -876,55 +869,6 @@
 
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => mobileMenu?.classList.add('hidden'));
-        });
-
-        // Desktop Openings Dropdown
-        const desktopOpeningsBtn = document.getElementById('desktop-openings-btn');
-        const desktopOpeningsDropdown = document.getElementById('desktop-openings-dropdown');
-
-        desktopOpeningsBtn?.addEventListener('click', (e) => {
-            e.preventDefault();
-            desktopOpeningsDropdown?.classList.toggle('hidden');
-        });
-
-        // Mobile Openings Dropdown
-        const mobileOpeningsBtn = document.getElementById('mobile-openings-btn');
-        const mobileOpeningsDropdown = document.getElementById('mobile-openings-dropdown');
-        const mobileOpeningsIcon = document.getElementById('mobile-openings-icon');
-
-        mobileOpeningsBtn?.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const isHidden = mobileOpeningsDropdown?.classList.contains('hidden');
-            
-            if (isHidden) {
-                mobileOpeningsDropdown?.classList.remove('hidden');
-                mobileOpeningsIcon?.classList.add('rotate-180');
-            } else {
-                mobileOpeningsDropdown?.classList.add('hidden');
-                mobileOpeningsIcon?.classList.remove('rotate-180');
-            }
-        });
-
-        // Close mobile openings dropdown when clicking on links
-        document.querySelectorAll('#mobile-openings-dropdown a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileOpeningsDropdown?.classList.add('hidden');
-                mobileOpeningsIcon?.classList.remove('rotate-180');
-                mobileMenu?.classList.add('hidden');
-            });
-        });
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!desktopOpeningsBtn?.contains(e.target) && !desktopOpeningsDropdown?.contains(e.target)) {
-                desktopOpeningsDropdown?.classList.add('hidden');
-            }
-            if (!mobileOpeningsBtn?.contains(e.target) && !mobileOpeningsDropdown?.contains(e.target)) {
-                mobileOpeningsDropdown?.classList.add('hidden');
-                mobileOpeningsIcon?.classList.remove('rotate-180'); // Reset icon rotation
-            }
         });
 
         /* ------------------------------
