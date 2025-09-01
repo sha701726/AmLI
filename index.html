@@ -44,6 +44,51 @@
             transform: translateY(-2px);
         }
 
+        /* Mobile Openings Dropdown Styles */
+        #mobile-openings-dropdown {
+            position: relative;
+            margin-top: 0.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        #mobile-openings-dropdown a {
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        #mobile-openings-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+
+        /* Marquee Responsive Styles */
+        #scrolling-marquee {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            #scrolling-marquee {
+                width: 95% !important;
+                top: 80px !important;
+                font-size: 14px !important;
+                height: 50px !important;
+                padding: 8px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #scrolling-marquee {
+                width: 98% !important;
+                top: 70px !important;
+                font-size: 12px !important;
+                height: 45px !important;
+                padding: 6px !important;
+            }
+        }
+
         .service-card {
             transition: all 0.3s ease;
         }
@@ -224,6 +269,15 @@
                     <a href="#services"
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">SERVICES</a>
                     <a href="#faq" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">FAQ</a>
+                    <div class="relative">
+                        <a href="javascript:void(0)" id="desktop-openings-btn"
+                        class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300 cursor-pointer">OPENINGS</a>
+                        <!-- Dropdown menu -->
+                        <div id="desktop-openings-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-1 w-40 z-50 left-0">
+                            <a href="job.html" class="block px-4 py-2 text-amli-gray-700 hover:bg-gray-100 transition-colors">Job</a>
+                            <a href="internship.html" class="block px-4 py-2 text-amli-gray-700 hover:bg-gray-100 transition-colors">Internship</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="md:hidden">
                     <button id="mobile-menu-btn"
@@ -242,8 +296,7 @@
                     class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">ABOUT</a>
                 <a href="#services"
                     class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICES</a>
-                <a href="#faq"
-                    class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">FAQ</a>
+                <a href="#faq" class="block px-3 py-3 font-bold text-white transition-colors duration-200">FAQ</a>
             </div>
         </div>
     </nav>
@@ -251,6 +304,9 @@
     <!-- hero-section -->
     <section id="home"
         class="hero-section min-h-screen flex items-center justify-center px-4 pt-16 relative overflow-hidden">
+        <marquee id="scrolling-marquee" width="90%" direction="left" height="60px" scrollamount="12" style="color: white; cursor: pointer; position: absolute; top: 100px; left: 50%; transform: translateX(-50%); z-index: 30; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; font-size: 16px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+            AmLI is hiring experienced car drivers for Kaushambi–Meerut route – Apply Now!
+          </marquee>
         <!-- Content -->
         <div class="relative z-20 max-w-4xl mx-auto text-center text-white">
             <div class="badge-container">
@@ -582,6 +638,28 @@
                             and the remaining 50% after service completion.</p>
                     </div>
                 </div>
+
+                <!-- FAQ Item 5: Openings and How to Apply -->
+                <div id="FAQ-5" class="bg-gray-50 rounded-lg border border-gray-200">
+                    <button
+                        class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
+                        onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-semibold text-amli-dark">Are there any openings? How can I apply?</h3>
+                        <i class="fas fa-chevron-down text-amli-green transition-transform" id="faq-icon-7"></i>
+                    </button>
+                    <div class="px-6 pb-4 hidden" id="faq-content-7">
+                        <p class="text-gray-600">Yes! We accept applications for both jobs and internships.
+                            Please apply using our Google Form. It takes just a minute.</p>
+                        <a href="https://forms.gle/5HwpP7rzE6k5m41H6"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="inline-block mt-3 px-4 py-2 bg-amli-gray text-white font-semibold rounded hover:opacity-90 transition-opacity">
+                           Apply via Google Form
+                        </a>
+                    </div>
+                </div>
+
+                
             </div>
         </div>
     </section>
@@ -799,6 +877,82 @@
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => mobileMenu?.classList.add('hidden'));
         });
+
+        // Desktop Openings Dropdown
+        const desktopOpeningsBtn = document.getElementById('desktop-openings-btn');
+        const desktopOpeningsDropdown = document.getElementById('desktop-openings-dropdown');
+
+        desktopOpeningsBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            desktopOpeningsDropdown?.classList.toggle('hidden');
+        });
+
+        // Mobile Openings Dropdown
+        const mobileOpeningsBtn = document.getElementById('mobile-openings-btn');
+        const mobileOpeningsDropdown = document.getElementById('mobile-openings-dropdown');
+        const mobileOpeningsIcon = document.getElementById('mobile-openings-icon');
+
+        mobileOpeningsBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const isHidden = mobileOpeningsDropdown?.classList.contains('hidden');
+            
+            if (isHidden) {
+                mobileOpeningsDropdown?.classList.remove('hidden');
+                mobileOpeningsIcon?.classList.add('rotate-180');
+            } else {
+                mobileOpeningsDropdown?.classList.add('hidden');
+                mobileOpeningsIcon?.classList.remove('rotate-180');
+            }
+        });
+
+        // Close mobile openings dropdown when clicking on links
+        document.querySelectorAll('#mobile-openings-dropdown a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileOpeningsDropdown?.classList.add('hidden');
+                mobileOpeningsIcon?.classList.remove('rotate-180');
+                mobileMenu?.classList.add('hidden');
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!desktopOpeningsBtn?.contains(e.target) && !desktopOpeningsDropdown?.contains(e.target)) {
+                desktopOpeningsDropdown?.classList.add('hidden');
+            }
+            if (!mobileOpeningsBtn?.contains(e.target) && !mobileOpeningsDropdown?.contains(e.target)) {
+                mobileOpeningsDropdown?.classList.add('hidden');
+                mobileOpeningsIcon?.classList.remove('rotate-180'); // Reset icon rotation
+            }
+        });
+
+        /* ------------------------------
+           Marquee Click-to-Stop Functionality
+        ------------------------------ */
+        const marquee = document.getElementById('scrolling-marquee');
+        let isMarqueeStopped = false;
+
+        marquee?.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (isMarqueeStopped) {
+                marquee.start();
+                isMarqueeStopped = false;
+                marquee.style.opacity = '1';
+                marquee.title = 'Click to stop scrolling';
+            } else {
+                marquee.stop();
+                isMarqueeStopped = true;
+                marquee.style.opacity = '1';
+                marquee.title = 'Click to start scrolling';
+            }
+        });
+
+        // Set initial title
+        if (marquee) {
+            marquee.title = 'Click to stop scrolling';
+        }
 
         /* ------------------------------
            Scroll Animations (Intersection Observer)
