@@ -1,3 +1,77 @@
+// Serverless function to fetch requests from Google Sheets
+// Environment variables required:
+// - GOOGLE_SERVICE_ACCOUNT_JSON (full JSON string)
+// - SPREADSHEET_ID (Google Sheet ID)
+// - SHEET_NAME (optional, defaults to Sheet1)
+
+const { google } = require('googleapis');
+
+module.exports = async (req, res) => {
+  if (req && req.method && req.method !== 'GET') {
+    res.status(405).json({ message: 'Method not allowed' });
+    return;
+  }
+
+  try {
+    const credentials = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+    if (!credentials) {
+      res.status(500).json({ message: 'Missing GOOGLE_SERVICE_ACCOUNT_JSON' });
+      return;
+    }
+
+    const auth = new google.auth.GoogleAuth({
+      credentials: JSON.parse(credentials),
+      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+    });
+
+    const sheets = google.sheets({ version: 'v4', auth });
+    const spreadsheetId = process.env.SPREADSHEET_ID;
+    const sheetName = process.env.SHEET_NAME || 'Sheet1';
+    const range = `${sheetName}!A1:Z`;
+
+    if (!spreadsheetId) {
+      res.status(500).json({ message: 'Missing SPREADSHEET_ID' });
+      return;
+    }
+
+    const { data } = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range,
+    });
+
+    const values = data.values || [];
+    if (values.length === 0) {
+      res.status(200).json([]);
+      return;
+    }
+
+    const headers = values[0];
+    const rows = values.slice(1);
+
+    const requests = rows.map((row) => {
+      const obj = {};
+      headers.forEach((header, idx) => {
+        obj[header] = row[idx] || '';
+      });
+      return obj;
+    });
+
+    // CORS headers (adjust origin as needed)
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    if (req.method === 'OPTIONS') {
+      res.status(204).end();
+      return;
+    }
+
+    res.status(200).json(requests);
+  } catch (err) {
+    console.error('Sheets read error:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 import { google } from "googleapis";
 import { Resend } from "resend";
 
