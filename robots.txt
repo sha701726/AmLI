@@ -1,0 +1,35 @@
+User-agent: *
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: curl
+Disallow: /
+
+User-agent: python-requests
+Disallow: /
+
+User-agent: scrapy
+Disallow: /
+
+User-agent: selenium
+Disallow: /
+
+User-agent: phantomjs
+Disallow: /
+
+User-agent: httrack
+Disallow: /
+
+User-agent: webcopier
+Disallow: /
+
+User-agent: bot
+Disallow: /
+
+User-agent: crawler
+Disallow: /
+
+User-agent: spider
+Disallow: /

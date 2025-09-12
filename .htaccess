@@ -1,0 +1,98 @@
+# Anti-download and anti-scraping protection
+RewriteEngine On
+
+# Block common download tools and bots
+RewriteCond %{HTTP_USER_AGENT} (wget|curl|python|requests|urllib|scrapy|beautifulsoup|selenium|phantomjs|headless|bot|crawler|spider|httrack|webcopier|offline|downloader|grabber) [NC]
+RewriteRule ^(.*)$ - [F,L]
+
+# Block common automation frameworks
+RewriteCond %{HTTP_USER_AGENT} (python-requests|scrapy|beautifulsoup|selenium|phantomjs|headless-chrome|puppeteer|playwright) [NC]
+RewriteRule ^(.*)$ - [F,L]
+
+# Block if no user agent (many bots don't send proper user agents)
+RewriteCond %{HTTP_USER_AGENT} ^$ [OR]
+RewriteCond %{HTTP_USER_AGENT} ^-?$
+RewriteRule ^(.*)$ - [F,L]
+
+# Block suspicious referrers
+RewriteCond %{HTTP_REFERER} (scraper|downloader|grabber|bot|crawler) [NC]
+RewriteRule ^(.*)$ - [F,L]
+
+# Block requests with suspicious headers
+RewriteCond %{HTTP_X_FORWARDED_FOR} (bot|crawler|scraper) [NC]
+RewriteRule ^(.*)$ - [F,L]
+
+# Block common scraping tools by IP (you can add known bot IPs here)
+# RewriteCond %{REMOTE_ADDR} ^192\.168\.1\.100$
+# RewriteRule ^(.*)$ - [F,L]
+
+# Prevent hotlinking of images
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https?://(www\.)?yourdomain\.com [NC]
+RewriteRule \.(jpg|jpeg|png|gif|bmp|svg)$ - [F,L]
+
+# Block access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|sql|conf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to backup files
+<FilesMatch "\.(bak|backup|old|tmp|temp)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to source files
+<FilesMatch "\.(js|css|php|py|rb|pl|sh)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Allow only specific file types for web access
+<FilesMatch "\.(html|htm|css|js|png|jpg|jpeg|gif|bmp|svg|ico|woff|woff2|ttf|eot)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Set security headers
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always append X-Frame-Options SAMEORIGIN
+    
+    # Prevent MIME type sniffing
+    Header set X-Content-Type-Options nosniff
+    
+    # Enable XSS protection
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Prevent information disclosure
+    Header unset Server
+    Header unset X-Powered-By
+    
+    # Content Security Policy
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com;"
+</IfModule>
+
+# Disable server signature
+ServerSignature Off
+
+# Disable directory browsing
+Options -Indexes
+
+# Block access to hidden files
+<FilesMatch "^\.">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Rate limiting (requires mod_evasive or similar)
+# Limit requests per IP
+<IfModule mod_evasive24.c>
+    DOSHashTableSize    2048
+    DOSPageCount        10
+    DOSSiteCount        50
+    DOSPageInterval     1
+    DOSSiteInterval     1
+    DOSBlockingPeriod   600
+</IfModule>
