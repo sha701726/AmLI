@@ -1321,14 +1321,44 @@
 
         function rateLimitOk() {
             try {
-                const key = 'amli_req_times';
                 const now = Date.now();
-                const windowMs = 60 * 1000; // 1 minute
-                const maxPerWindow = 3;
-                const arr = JSON.parse(localStorage.getItem(key) || '[]').filter(t => now - t < windowMs);
-                if (arr.length >= maxPerWindow) return false;
-                arr.push(now);
-                localStorage.setItem(key, JSON.stringify(arr));
+                const hourMs = 60 * 60 * 1000; // 1 hour
+                const minuteMs = 60 * 1000; // 1 minute
+                
+                // Check if permanently blocked
+                const blockedKey = 'amli_permanent_block';
+                const blockedData = JSON.parse(localStorage.getItem(blockedKey) || '{}');
+                if (blockedData.blocked && blockedData.blockedUntil > now) {
+                    return false; // Still blocked
+                }
+                
+                // Track hourly submissions
+                const hourlyKey = 'amli_hourly_times';
+                const hourlyArr = JSON.parse(localStorage.getItem(hourlyKey) || '[]').filter(t => now - t < hourMs);
+                
+                // If more than 5 in an hour, block permanently
+                if (hourlyArr.length >= 2) {
+                    const blockUntil = now + (48 * 60 * 60 * 1000); // Block for 48 hours
+                    localStorage.setItem(blockedKey, JSON.stringify({
+                        blocked: true,
+                        blockedUntil: blockUntil,
+                        reason: 'Too many submissions (>5/hour)',
+                        blockedAt: now
+                    }));
+                    return false;
+                }
+                
+                // Regular minute-based rate limiting (3 per minute)
+                const minuteKey = 'amli_req_times';
+                const minuteArr = JSON.parse(localStorage.getItem(minuteKey) || '[]').filter(t => now - t < minuteMs);
+                if (minuteArr.length >= 2) return false;
+                
+                // Update both tracking arrays
+                hourlyArr.push(now);
+                minuteArr.push(now);
+                localStorage.setItem(hourlyKey, JSON.stringify(hourlyArr));
+                localStorage.setItem(minuteKey, JSON.stringify(minuteArr));
+                
                 return true;
             } catch (_) { return true; }
         }
@@ -1351,7 +1381,15 @@
 
             // Client rate limit
             if (!rateLimitOk()) {
-                alert('Too many submissions. Please wait a minute and try again.');
+                // Check if permanently blocked
+                const blockedKey = 'amli_permanent_block';
+                const blockedData = JSON.parse(localStorage.getItem(blockedKey) || '{}');
+                if (blockedData.blocked && blockedData.blockedUntil > Date.now()) {
+                    const hoursLeft = Math.ceil((blockedData.blockedUntil - Date.now()) / (60 * 60 * 1000));
+                    alert(`You have been temporarily blocked for ${hoursLeft} hours due to excessive submissions. Please try again later.`);
+                } else {
+                    alert('Too many submissions. Please wait a minute and try again.');
+                }
                 return;
             }
 
