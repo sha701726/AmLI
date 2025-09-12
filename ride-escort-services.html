@@ -1044,6 +1044,14 @@
                             transition-all duration-300 ease-in-out">
                             Book Transportation Services
                         </button>
+                        <!-- Honeypot fields (hidden) -->
+                        <div style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;">
+                            <label>Company</label>
+                            <input type="text" name="company" tabindex="-1" autocomplete="off">
+                            <label>Website</label>
+                            <input type="url" name="website" tabindex="-1" autocomplete="off">
+                            <input type="text" name="hp_check" value="" tabindex="-1" autocomplete="off">
+                        </div>
                     </form>                 
                 </div>
             </div>
@@ -1281,9 +1289,71 @@
         Handle Form Submission (Save + Email)
         ------------------------------ */
         const SUPPORT_EMAIL = (window.EMAIL_TO || 'sha701726@gmail.com');
+        const PAGE_LOAD_TS = Date.now();
+        // simple js token
+        const AMLI_JS_TOKEN = (() => {
+            try {
+                const ua = navigator.userAgent || '';
+                const salt = 'amli-v1';
+                let sum = 0;
+                for (let i = 0; i < ua.length; i++) sum = (sum + ua.charCodeAt(i) + i) % 1000000007;
+                return btoa(String(sum) + ':' + salt);
+            } catch (_) { return ''; }
+        })();
+
+        // lightweight proof-of-work: find x where sha-256(prefix+x) starts with 0000
+        async function pow(prefix, maxIters) {
+            const enc = new TextEncoder();
+            for (let i = 0; i < maxIters; i++) {
+                const msg = prefix + ':' + i;
+                const buf = await crypto.subtle.digest('SHA-256', enc.encode(msg));
+                const hashBytes = new Uint8Array(buf);
+                // check first 2 bytes == 0 for ~1/65536; keep small for UX
+                if (hashBytes[0] === 0 && hashBytes[1] === 0) {
+                    // return hex
+                    let hex = '';
+                    for (let b of hashBytes) hex += b.toString(16).padStart(2, '0');
+                    return { nonce: i, hash: hex };
+                }
+            }
+            return null;
+        }
+
+        function rateLimitOk() {
+            try {
+                const key = 'amli_req_times';
+                const now = Date.now();
+                const windowMs = 60 * 1000; // 1 minute
+                const maxPerWindow = 3;
+                const arr = JSON.parse(localStorage.getItem(key) || '[]').filter(t => now - t < windowMs);
+                if (arr.length >= maxPerWindow) return false;
+                arr.push(now);
+                localStorage.setItem(key, JSON.stringify(arr));
+                return true;
+            } catch (_) { return true; }
+        }
+
         document.querySelector('form')?.addEventListener('submit', async function (e) {
             e.preventDefault();
             const formData = collectFormData(this);
+
+            // Honeypot checks: any filled hidden fields -> block
+            if (formData['company'] || formData['website'] || (formData['hp_check'] && formData['hp_check'].trim() !== '')) {
+                alert('Submission blocked.');
+                return;
+            }
+
+            // Min time on page (human interaction window)
+            if (Date.now() - PAGE_LOAD_TS < 2500) {
+                alert('Please take a moment to review the form before submitting.');
+                return;
+            }
+
+            // Client rate limit
+            if (!rateLimitOk()) {
+                alert('Too many submissions. Please wait a minute and try again.');
+                return;
+            }
 
             const requiredFields = [
                 'first-name', 'last-name', 'phone',
@@ -1300,11 +1370,23 @@
             // Try saving to API first; always proceed to opening email
             let reqId = `REQ-${Date.now()}`;
             let timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+            // compute light PoW before sending
+            let powResult = null;
+            try {
+                powResult = await pow(reqId, 200000); // bounded for UX
+            } catch (_) {}
             try {
                 const resp = await fetch('/api/request', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ...formData, 'request-id': reqId, 'request-timestamp': timestamp })
+                    body: JSON.stringify({
+                        ...formData,
+                        'request-id': reqId,
+                        'request-timestamp': timestamp,
+                        '__js_token': AMLI_JS_TOKEN,
+                        '__pow': powResult,
+                        '__page_time_ms': Date.now() - PAGE_LOAD_TS
+                    })
                 });
                 let raw = await resp.text();
                 let result;
