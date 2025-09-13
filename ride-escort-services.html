@@ -462,11 +462,11 @@
                     </span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#services" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">SERVICES</a>
-                    <a href="#fleet-safety" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">FLEET & SAFETY</a>
-                    <a href="#service-types" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">SERVICE TYPES</a>
-                    <a href="#industries" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">INDUSTRIES</a>
-                    <a href="#transport" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">BOOK SERVICE</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('services')" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">SERVICES</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('fleet-safety')" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">FLEET & SAFETY</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('service-types')" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">SERVICE TYPES</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('industries')" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">INDUSTRIES</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('transport')" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">BOOK SERVICE</a>
                 </div>
                         <div class="md:hidden">
             <button id="mobile-menu-btn" class="text-amli-black hover:text-amli-black p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amli-gold">
@@ -478,11 +478,11 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-amli-dark absolute top-16 left-0 w-full shadow-lg z-50">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#services" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICES</a>
-                <a href="#fleet-safety" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">FLEET & SAFETY</a>
-                <a href="#service-types" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICE TYPES</a>
-                <a href="#industries" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">INDUSTRIES</a>
-                <a href="#transport" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">BOOK SERVICE</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('services')" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICES</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('fleet-safety')" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">FLEET & SAFETY</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('service-types')" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICE TYPES</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('industries')" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">INDUSTRIES</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('transport')" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">BOOK SERVICE</a>
             </div>
         </div>
     </nav>
@@ -1122,6 +1122,19 @@
         </div>
     </footer>
     <script>
+    /* ------------------------------
+       Smooth Scrolling Function
+    ------------------------------ */
+    function scrollToSection(sectionId) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+
     /* ------------------------------
        Mobile Menu Toggle
     ------------------------------ */

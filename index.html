@@ -262,13 +262,13 @@
                     </span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#home"
+                    <a href="javascript:void(0)" onclick="scrollToSection('home')"
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">HOME</a>
-                    <a href="#about"
+                    <a href="javascript:void(0)" onclick="scrollToSection('about')"
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">ABOUT</a>
-                    <a href="#services"
+                    <a href="javascript:void(0)" onclick="scrollToSection('services')"
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">SERVICES</a>
-                    <a href="#faq" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">FAQ</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('faq')" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">FAQ</a>
                     <a href="https://dotnet-n7t3.onrender.com/" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">AmLI ASSISTANT</a>
                 </div>
                 <div class="md:hidden">
@@ -282,13 +282,13 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-amli-dark absolute top-16 left-0 w-full shadow-lg z-50">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home"
+                <a href="javascript:void(0)" onclick="scrollToSection('home')"
                     class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">HOME</a>
-                <a href="#about"
+                <a href="javascript:void(0)" onclick="scrollToSection('about')"
                     class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">ABOUT</a>
-                <a href="#services"
+                <a href="javascript:void(0)" onclick="scrollToSection('services')"
                     class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICES</a>
-                <a href="#faq" class="block px-3 py-3 font-bold text-white transition-colors duration-200">FAQ</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('faq')" class="block px-3 py-3 font-bold text-white transition-colors duration-200">FAQ</a>
                 <a href="https://dotnet-n7t3.onrender.com/" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">AmLI ASSISTANT</a>
             </div>
         </div>
@@ -830,9 +830,9 @@
                 <div>
                     <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
-                        <li><a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="javascript:void(0)" onclick="scrollToSection('about')" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="javascript:void(0)" onclick="scrollToSection('services')" class="hover:text-white transition-colors">Services</a></li>
+                        <li><a href="javascript:void(0)" onclick="scrollToSection('how-it-works')" class="hover:text-white transition-colors">How It Works</a></li>
                         <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a>
                         </li>
                         <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of
@@ -871,6 +871,19 @@
 
 
     <script>
+        /* ------------------------------
+           Smooth Scrolling Function
+        ------------------------------ */
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
         /* ------------------------------
            Mobile Menu Toggle
         ------------------------------ */

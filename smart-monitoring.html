@@ -117,9 +117,9 @@
                     </span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#services" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">SERVICES</a>
-                    <a href="#features" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">FEATURES</a>
-                    <a href="#system" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">MONITORING SOLUTIONS</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('services')" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">SERVICES</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('features')" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">FEATURES</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('system')" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">MONITORING SOLUTIONS</a>
                     <a href="#contact" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">CONTACT</a>
                 </div>
                         <div class="md:hidden">
@@ -132,9 +132,9 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-amli-dark absolute top-16 left-0 w-full shadow-lg z-50">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#services" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICES</a>
-                <a href="#features" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">FEATURES</a>
-                <a href="#system" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">MONITORING SOLUTIONS</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('services')" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICES</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('features')" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">FEATURES</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('system')" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">MONITORING SOLUTIONS</a>
                 <a href="#contact" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">CONTACT</a>
             </div>
         </div>
@@ -572,6 +572,19 @@
         </div>
     </footer>
     <script>
+        /* ------------------------------
+           Smooth Scrolling Function
+        ------------------------------ */
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
         // Mobile menu toggle
         document.getElementById('mobile-menu-btn').addEventListener('click', function () {
             const mobileMenu = document.getElementById('mobile-menu');
