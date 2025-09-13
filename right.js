@@ -60,6 +60,31 @@ document.addEventListener('keydown', function (e) {
         e.preventDefault();
         return false;
     }
+    // Disable Windows+Shift+S (Snipping Tool)
+    if (e.key === 'S' && e.shiftKey && e.metaKey) {
+        e.preventDefault();
+        return false;
+    }
+    // Disable Print Screen key
+    if (e.key === 'PrintScreen' || e.keyCode === 44) {
+        e.preventDefault();
+        return false;
+    }
+    // Disable Alt+Print Screen
+    if (e.altKey && (e.key === 'PrintScreen' || e.keyCode === 44)) {
+        e.preventDefault();
+        return false;
+    }
+    // Disable Windows+Print Screen
+    if (e.metaKey && (e.key === 'PrintScreen' || e.keyCode === 44)) {
+        e.preventDefault();
+        return false;
+    }
+    // Disable F11 (Full Screen - often used for screenshots)
+    if (e.key === 'F11') {
+        e.preventDefault();
+        return false;
+    }
 });
 
 // Disable text selection
@@ -109,7 +134,89 @@ document.addEventListener('touchend', function (e) {
 
 var lastTouchEnd = 0;
 
-// Add CSS to prevent text selection
+// Additional screenshot protection measures
+(function() {
+    // Disable right-click context menu (uncomment if needed)
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+        return false;
+    });
+    
+    // Prevent drag and drop of images
+    document.addEventListener('dragstart', function (e) {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    // Disable common screenshot browser extensions
+    var screenshotExtensions = [
+        'screenshot', 'capture', 'snip', 'grab', 'shot', 'pic', 'image'
+    ];
+    
+    // Monitor for screenshot-related function calls
+    var originalConsole = window.console;
+    window.console = new Proxy(originalConsole, {
+        get: function(target, prop) {
+            if (typeof prop === 'string' && screenshotExtensions.some(ext => prop.toLowerCase().includes(ext))) {
+                return function() {
+                    console.warn('Screenshot functionality blocked');
+                };
+            }
+            return target[prop];
+        }
+    });
+    
+    // Disable common screenshot APIs
+    if (window.navigator && window.navigator.mediaDevices) {
+        var originalGetDisplayMedia = window.navigator.mediaDevices.getDisplayMedia;
+        if (originalGetDisplayMedia) {
+            window.navigator.mediaDevices.getDisplayMedia = function() {
+                throw new Error('Screen capture is disabled');
+            };
+        }
+    }
+    
+    // Disable HTML5 Canvas toDataURL for screenshots
+    var originalToDataURL = HTMLCanvasElement.prototype.toDataURL;
+    HTMLCanvasElement.prototype.toDataURL = function() {
+        throw new Error('Canvas data extraction is disabled');
+    };
+    
+    // Disable getImageData for screenshots
+    var originalGetImageData = CanvasRenderingContext2D.prototype.getImageData;
+    CanvasRenderingContext2D.prototype.getImageData = function() {
+        throw new Error('Image data extraction is disabled');
+    };
+    
+    // Monitor for screenshot-related DOM modifications
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.nodeType === 1) { // Element node
+                        var className = node.className || '';
+                        var id = node.id || '';
+                        if (screenshotExtensions.some(ext => 
+                            className.toLowerCase().includes(ext) || 
+                            id.toLowerCase().includes(ext)
+                        )) {
+                            node.remove();
+                        }
+                    }
+                });
+            }
+        });
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
+
+// Add CSS to prevent text selection and screenshot protection
 var style = document.createElement('style');
 style.textContent = `
     * {
@@ -126,6 +233,41 @@ style.textContent = `
         -moz-user-select: text !important;
         -ms-user-select: text !important;
         user-select: text !important;
+    }
+    
+    /* Screenshot protection overlay */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        pointer-events: none;
+        z-index: 999999;
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+    }
+    
+    /* Prevent context menu on images */
+    img {
+        -webkit-user-drag: none !important;
+        -khtml-user-drag: none !important;
+        -moz-user-drag: none !important;
+        -o-user-drag: none !important;
+        user-drag: none !important;
+        pointer-events: none !important;
+    }
+    
+    /* Disable right-click on all elements */
+    * {
+        -webkit-context-menu: none !important;
+        -moz-context-menu: none !important;
+        -ms-context-menu: none !important;
+        context-menu: none !important;
     }
 `;
 document.head.appendChild(style);
