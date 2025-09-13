@@ -1,7 +1,7 @@
 // Disable right-click context menu
-document.addEventListener('contextmenu', function (e) {
-    e.preventDefault();
-});
+// document.addEventListener('contextmenu', function (e) {
+//     e.preventDefault();
+// });
 
 // Disable copy-paste functionality
 document.addEventListener('keydown', function (e) {
