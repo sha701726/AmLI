@@ -245,6 +245,174 @@
         }
 
         /* absolute inset-0 z-10 bg-black bg-opacity-60 */
+
+        .ride-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 18px;
+            border: 2px solid #2c4d70;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+            color: #0f2137;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            width: auto;
+            min-width: 220px;
+            height: 60px;
+            box-shadow: 0 10px 20px rgba(44, 77, 112, 0.15), 0 2px 6px rgba(44, 77, 112, 0.12);
+            transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background 200ms ease;
+            z-index: 9999;
+            overflow: hidden;
+            backdrop-filter: saturate(140%) blur(8px);
+            -webkit-backdrop-filter: saturate(140%) blur(8px);
+        }
+
+        .ride-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(44, 77, 112, 0.18), 0 6px 10px rgba(44, 77, 112, 0.14);
+            border-color: #173855;
+        }
+
+        .ride-btn .text {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ride-btn .circle {
+            width: 48px;
+            height: 48px;
+            border: 2px solid #0a0a0a;
+            border-radius: 50%;
+            margin-left: 6px;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,1) 100%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .ride-btn .glow::after {
+            content: "";
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px solid rgba(44, 77, 112, 0.25);
+            animation: ringPulse 1.8s ease-out infinite;
+        }
+
+        .ride-btn .icon {
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #1d4e89;
+            background: rgba(29, 78, 137, 0.08);
+            border-radius: 9999px;
+            border: 1px solid rgba(29, 78, 137, 0.15);
+        }
+
+        .ride-btn .icon svg {
+            width: 20px;
+            height: 20px;
+            display: block;
+            color: #ffffff;
+            fill: #ffffff;
+        }
+
+        /* Icon when inside the circle: simplify background and animate */
+        .ride-btn .circle .icon {
+            background: none;
+            border: 0;
+            animation: drive 1.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes drive {
+            0% { transform: translateX(-3px); }
+            100% { transform: translateX(3px); }
+        }
+
+        .ride-btn .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 2px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #b00020;
+            background: rgba(255, 0, 0, 0.08);
+            border: 1px solid rgba(176, 0, 32, 0.25);
+            border-radius: 9999px;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        .ride-btn .badge::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ff2d55;
+            box-shadow: 0 0 0 0 rgba(255, 45, 85, 0.6);
+            animation: pulse 1.4s ease-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 45, 85, 0.6); }
+            70% { box-shadow: 0 0 0 8px rgba(255, 45, 85, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 45, 85, 0); }
+        }
+
+        @keyframes ringPulse {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            60% { transform: scale(1.08); opacity: 0; }
+            100% { transform: scale(1.08); opacity: 0; }
+        }
+
+        .ride-btn:hover .icon {
+            transform: translateX(2px);
+            transition: transform 200ms ease;
+        }
+
+        @media (max-width: 480px) {
+            .ride-btn {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 14px;
+                height: 52px;
+                min-width: 200px;
+                gap: 10px;
+                font-size: 15px;
+            }
+            .ride-btn .circle {
+                width: 42px;
+                height: 42px;
+                margin-left: 4px;
+            }
+            .ride-btn .icon {
+                width: 24px;
+                height: 24px;
+            }
+            .ride-btn .icon svg {
+                width: 18px;
+                height: 18px;
+            }
+            .ride-btn .badge {
+                padding: 1px 6px;
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 
@@ -268,8 +436,10 @@
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors duration-300">ABOUT</a>
                     <a href="javascript:void(0)" onclick="scrollToSection('services')"
                         class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">SERVICES</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('faq')" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">FAQ</a>
-                    <a href="https://dotnet-n7t3.onrender.com/" class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">AmLI ASSISTANT</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('faq')"
+                        class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">FAQ</a>
+                    <a href="https://dotnet-n7t3.onrender.com/"
+                        class="text-amli-gray-700 font-bold hover:text-amli-black transition-colors">AmLI ASSISTANT</a>
                 </div>
                 <div class="md:hidden">
                     <button id="mobile-menu-btn"
@@ -288,18 +458,80 @@
                     class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">ABOUT</a>
                 <a href="javascript:void(0)" onclick="scrollToSection('services')"
                     class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">SERVICES</a>
-                <a href="javascript:void(0)" onclick="scrollToSection('faq')" class="block px-3 py-3 font-bold text-white transition-colors duration-200">FAQ</a>
-                <a href="https://dotnet-n7t3.onrender.com/" class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">AmLI ASSISTANT</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('faq')"
+                    class="block px-3 py-3 font-bold text-white transition-colors duration-200">FAQ</a>
+                <a href="https://dotnet-n7t3.onrender.com/"
+                    class="block px-3 py-3 font-bold text-white hover:text-amli-gold transition-colors duration-200">AmLI
+                    ASSISTANT</a>
             </div>
         </div>
     </nav>
 
+
+    <a href="https://screen-ruddy.vercel.app/" class="ride-btn">
+        <span class="text">
+            On-going Rides
+            <span class="badge">Live</span>
+        </span>
+        <span class="circle glow">
+            <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 13h1l1.2-3.2A3 3 0 0 1 8.03 8h7.94c1.25 0 2.36.77 2.8 1.93L21 13h0.5a1.5 1.5 0 0 1 0 3H21v1a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1H2.5a1.5 1.5 0 0 1 0-3H3Zm4.5 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" fill="currentColor"/>
+                </svg>
+            </span>
+        </span>
+    </a>
+    <script>
+        (function () {
+            var LONG_PRESS_MS = 800;
+            var buttons = document.querySelectorAll('.ride-btn');
+            if (!buttons || !buttons.length) return;
+            buttons.forEach(function (btn) {
+                var timerId = null;
+                var longPressed = false;
+
+                function start() {
+                    longPressed = false;
+                    clear();
+                    timerId = setTimeout(function () {
+                        longPressed = true;
+                        btn.style.display = 'none';
+                    }, LONG_PRESS_MS);
+                }
+
+                function clear() {
+                    if (timerId) {
+                        clearTimeout(timerId);
+                        timerId = null;
+                    }
+                }
+
+                function handleClick(e) {
+                    if (longPressed) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                }
+
+                btn.addEventListener('mousedown', start, { passive: true });
+                btn.addEventListener('touchstart', start, { passive: true });
+                btn.addEventListener('mouseup', clear);
+                btn.addEventListener('mouseleave', clear);
+                btn.addEventListener('touchend', clear);
+                btn.addEventListener('touchcancel', clear);
+                btn.addEventListener('click', handleClick, true);
+            });
+        })();
+    </script>
+
+
     <!-- hero-section -->
     <section id="home"
         class="hero-section min-h-screen flex items-center justify-center px-4 pt-16 relative overflow-hidden">
-        <marquee id="scrolling-marquee" width="90%" direction="left" height="60px" scrollamount="12" style="color: white; cursor: pointer; position: absolute; top: 100px; left: 50%; transform: translateX(-50%); z-index: 30; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; font-size: 16px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+        <marquee id="scrolling-marquee" width="90%" direction="left" height="60px" scrollamount="12"
+            style="color: white; cursor: pointer; position: absolute; top: 100px; left: 50%; transform: translateX(-50%); z-index: 30; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; font-size: 16px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
             AmLI is hiring experienced car drivers for Kaushambi–Meerut route – Apply Now!
-          </marquee>
+        </marquee>
         <!-- Content -->
         <div class="relative z-20 max-w-4xl mx-auto text-center text-white">
             <div class="badge-container">
@@ -314,9 +546,12 @@
                 <br>AmLI's elite forces blend intelligence, discipline, and all-round tactical readiness.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="images/presentation.pdf" target="_blank" class="inline-flex items-center justify-center w-48 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                <a href="images/presentation.pdf" target="_blank"
+                    class="inline-flex items-center justify-center w-48 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                     </svg>
                     Know more
                 </a>
@@ -657,16 +892,14 @@
                     <div class="px-6 pb-4 hidden" id="faq-content-7">
                         <p class="text-gray-600">Yes! We accept applications for both jobs and internships.
                             Please apply using our Google Form. It takes just a minute.</p>
-                        <a href="https://forms.gle/5HwpP7rzE6k5m41H6"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="inline-block mt-3 px-4 py-2 bg-amli-gray text-white font-semibold rounded hover:opacity-90 transition-opacity">
-                           Apply via Google Form
+                        <a href="https://forms.gle/5HwpP7rzE6k5m41H6" target="_blank" rel="noopener noreferrer"
+                            class="inline-block mt-3 px-4 py-2 bg-amli-gray text-white font-semibold rounded hover:opacity-90 transition-opacity">
+                            Apply via Google Form
                         </a>
                     </div>
                 </div>
 
-                
+
             </div>
         </div>
     </section>
@@ -830,9 +1063,12 @@
                 <div>
                     <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="javascript:void(0)" onclick="scrollToSection('about')" class="hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="javascript:void(0)" onclick="scrollToSection('services')" class="hover:text-white transition-colors">Services</a></li>
-                        <li><a href="javascript:void(0)" onclick="scrollToSection('how-it-works')" class="hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="javascript:void(0)" onclick="scrollToSection('about')"
+                                class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="javascript:void(0)" onclick="scrollToSection('services')"
+                                class="hover:text-white transition-colors">Services</a></li>
+                        <li><a href="javascript:void(0)" onclick="scrollToSection('how-it-works')"
+                                class="hover:text-white transition-colors">How It Works</a></li>
                         <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a>
                         </li>
                         <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of
@@ -906,7 +1142,7 @@
 
         marquee?.addEventListener('click', (e) => {
             e.preventDefault();
-            
+
             if (isMarqueeStopped) {
                 marquee.start();
                 isMarqueeStopped = false;
